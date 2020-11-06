@@ -36,13 +36,24 @@ export default {
         let responses = [];
         let text = origText.toLowerCase();
         let responseIndexArr = []; 
+        let translate = null;
 
         Object.keys(keywordMap).forEach(key => {    
             let index = keywordMap[key];
 
             let val = responseMap[`${index}`];
 
-            if(text.includes(key) && !responseIndexArr.includes(index)){
+            translate = "this is a test translation"; // TODO: Call translate service
+
+            if(text.includes(key) && !responseIndexArr.includes(index) && translate != ""){
+                let response = {
+                    english: val,
+                    translated: translate
+                };
+
+                responses.push(response);
+                responseIndexArr.push(index);
+            } else if(text.includes(key) && !responseIndexArr.includes(index) && translate === ""){
                 responses.push(val);
                 responseIndexArr.push(index);
             }

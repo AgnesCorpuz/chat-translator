@@ -15,16 +15,42 @@ function showRecommendations(suggArr, conversationId, communicationId){
 
     // Display recommended replies in HTML
     for (var i = 0; i < suggArr.length; i++) {
-        var suggest = document.createElement("a");
-        suggest.innerHTML = suggArr[i];
-        suggest.addEventListener('click', function(event) {
-            sendMessage(this.innerText, conversationId, communicationId);
-        });
+        if (suggArr.hasOwnProperty('translated')) {
+            // english-container properties
+            var english = document.createElement("a");
+            english.innerHTML = suggArr[i].english;
+            english.addEventListener('click', function(event) {
+                sendMessage(this.innerText, conversationId, communicationId);
+            });
 
-        var suggestContainer = document.createElement("div");
-        suggestContainer.appendChild(suggest);
-        suggestContainer.className = "suggest-container";
-        document.getElementById("agent-assist").appendChild(suggestContainer);
+            var englishContainer = document.createElement("div");
+            englishContainer.appendChild(english);
+            englishContainer.className = "english-container";
+            document.getElementById("agent-assist").appendChild(englishContainer);
+
+            // translated-container properties
+            var translated = document.createElement("a");
+            translated.innerHTML = suggArr[i].translated;
+            translated.addEventListener('click', function(event) {
+                sendMessage(this.innerText, conversationId, communicationId);
+            });
+
+            var translatedContainer = document.createElement("div");
+            translatedContainer.appendChild(translated);
+            translatedContainer.className = "translated-container";
+            document.getElementById("agent-assist").appendChild(translatedContainer);
+        } else {
+            var suggest = document.createElement("a");
+            suggest.innerHTML = suggArr[i];
+            suggest.addEventListener('click', function(event) {
+                sendMessage(this.innerText, conversationId, communicationId);
+            });
+
+            var suggestContainer = document.createElement("div");
+            suggestContainer.appendChild(suggest);
+            suggestContainer.className = "suggest-container";
+            document.getElementById("agent-assist").appendChild(suggestContainer);
+        }
     }    
 }
 

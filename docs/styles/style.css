@@ -22,3 +22,16 @@ body {
 .agent-assistant a:hover{
     text-decoration: underline;
 }
+
+.agent-assist {
+    width: 100%;
+}
+
+.english-container {
+    width: 50%;
+    float: left;
+}
+
+.translated-container {
+    margin-left: 50%;
+}
