@@ -15,7 +15,7 @@ function showRecommendations(suggArr, conversationId, communicationId){
 
     // Display recommended replies in HTML
     for (var i = 0; i < suggArr.length; i++) {
-        if (suggArr.hasOwnProperty('translated')) {
+        if (suggArr[i].hasOwnProperty('translated')) {
             // english-container properties
             var english = document.createElement("a");
             english.innerHTML = suggArr[i].english;
