@@ -39,6 +39,9 @@ function showRecommendations(suggArr, conversationId, communicationId){
             translatedContainer.appendChild(translated);
             translatedContainer.className = "translated-container";
             document.getElementById("agent-assist").appendChild(translatedContainer);
+
+            var hr = document.createElement("HR");
+            document.getElementById("agent-assist").appendChild(hr);
         } else {
             var suggest = document.createElement("a");
             suggest.innerHTML = suggArr[i];
