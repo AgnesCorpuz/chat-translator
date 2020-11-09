@@ -18,7 +18,7 @@ function showRecommendations(suggArr, conversationId, communicationId){
         if (suggArr[i].hasOwnProperty('translated')) {
             // container for english and translated divs
             var suggestContainer = document.createElement("div");
-            suggestContainer.id = "suggest-container";
+            suggestContainer.className = "suggest-container";
             document.getElementById("agent-assist").appendChild(suggestContainer);
 
             // english-container properties
