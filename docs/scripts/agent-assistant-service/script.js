@@ -43,7 +43,7 @@ export default {
 
             let val = responseMap[`${index}`];
 
-            translate = "this is a test translation"; // TODO: Call translate service
+            translate = "Ito ay isang halimbawa ng pagsasalin"; // TODO: Call translate service
 
             if(text.includes(key) && !responseIndexArr.includes(index) && translate != ""){
                 let response = {
