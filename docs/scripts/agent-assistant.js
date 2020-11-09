@@ -16,6 +16,11 @@ function showRecommendations(suggArr, conversationId, communicationId){
     // Display recommended replies in HTML
     for (var i = 0; i < suggArr.length; i++) {
         if (suggArr[i].hasOwnProperty('translated')) {
+            // container for english and translated divs
+            var suggestContainer = document.createElement("div");
+            suggestContainer.id = "suggest-container";
+            document.getElementById("agent-assist").appendChild(suggestContainer);
+
             // english-container properties
             var english = document.createElement("a");
             english.innerHTML = suggArr[i].english;
@@ -26,7 +31,7 @@ function showRecommendations(suggArr, conversationId, communicationId){
             var englishContainer = document.createElement("div");
             englishContainer.appendChild(english);
             englishContainer.className = "english-container";
-            document.getElementById("agent-assist").appendChild(englishContainer);
+            document.getElementById("suggest-container").appendChild(englishContainer);
 
             // translated-container properties
             var translated = document.createElement("a");
@@ -38,7 +43,7 @@ function showRecommendations(suggArr, conversationId, communicationId){
             var translatedContainer = document.createElement("div");
             translatedContainer.appendChild(translated);
             translatedContainer.className = "translated-container";
-            document.getElementById("agent-assist").appendChild(translatedContainer);
+            document.getElementById("suggest-container").appendChild(translatedContainer);
 
             var hr = document.createElement("HR");
             document.getElementById("agent-assist").appendChild(hr);
