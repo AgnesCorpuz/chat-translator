@@ -19,7 +19,7 @@ function showRecommendations(suggArr, conversationId, communicationId){
             // container for english and translated divs
             var suggestContainer = document.createElement("div");
             suggestContainer.className = "suggest-container";
-            suggestContainer.id = "suggest-container-" + "i";
+            suggestContainer.id = "suggest-container-" + i;
             document.getElementById("agent-assist").appendChild(suggestContainer);
 
             // english-container properties
@@ -32,7 +32,7 @@ function showRecommendations(suggArr, conversationId, communicationId){
             var englishContainer = document.createElement("div");
             englishContainer.appendChild(english);
             englishContainer.className = "english-container";
-            document.getElementById("suggest-container-" + "i").appendChild(englishContainer);
+            document.getElementById("suggest-container-" + i).appendChild(englishContainer);
 
             // translated-container properties
             var translated = document.createElement("a");
@@ -44,7 +44,7 @@ function showRecommendations(suggArr, conversationId, communicationId){
             var translatedContainer = document.createElement("div");
             translatedContainer.appendChild(translated);
             translatedContainer.className = "translated-container";
-            document.getElementById("suggest-container-" + "i").appendChild(translatedContainer);
+            document.getElementById("suggest-container-" + i).appendChild(translatedContainer);
 
             var hr = document.createElement("HR");
             document.getElementById("agent-assist").appendChild(hr);
