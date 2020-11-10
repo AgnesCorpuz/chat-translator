@@ -30,7 +30,7 @@ body {
     height: 350px;
 }
 
-@media only screen and (max-width: 250px) {	
+/* @media only screen and (max-width: 250px) {	
     #agent-assist {	
         height: 295px;	
     }	
@@ -40,7 +40,7 @@ body {
     #agent-assist {	
         min-height: 350px;	
     }
-}
+} */
 
 hr {
     padding: 0px !important;
