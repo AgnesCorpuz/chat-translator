@@ -46,7 +46,7 @@ let onMessage = (data) => {
             } else if (purpose == 'agent') {
                 view.addChatMessage(name, message, purpose);
                 
-                let agent = conversation.participants.find(p => p.purpose == 'agent');
+                let agent = currentConversation.participants.find(p => p.purpose == 'agent');
                 communicationId = agent.chats[0].id;
             }
 
@@ -65,6 +65,8 @@ function sendChat(){
         view.addChatMessage(userName, translatedMsg, "agent");
         sendMessage(translatedMsg, currentConversationId, communicationId);
     });
+
+    document.getElementById("message-textarea").value = '';
 };
 
 /**
