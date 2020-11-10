@@ -111,6 +111,22 @@ hr {
     right: -9px;   
 }
 
+.chat-conversation {
+    display: flex;
+    flex: 1 1 100%;
+    flex-direction: column;
+}
+
+.message-pane {
+    display: flex;
+    align-content: stretch;
+    flex-direction: column;
+    height: calc(100% - 100px);
+    background-color: #fff;
+    overflow-y: auto;
+    flex: 1 1 0;
+}
+
 .chat-box {
     padding: 0px 20px 0px 20px;
     border-top: 1px solid #ccc;
