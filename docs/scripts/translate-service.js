@@ -21,6 +21,7 @@ export default {
             // Response nung translation
             let translated_text = translationData.translated_text;
             console.log(translated_text);
+            console.log(JSON.stringify(translationData));
 
             callback(translated_text);
         })

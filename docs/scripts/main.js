@@ -14,6 +14,7 @@ let userId = '';
 let userName = '';
 let currentConversation = null;
 let currentConversationId = '';
+let communicationId;
 
 /**
  * Callback function for 'message' and 'typing-indicator' events.
@@ -44,6 +45,9 @@ let onMessage = (data) => {
                 });
             } else if (purpose == 'agent') {
                 view.addChatMessage(name, message, purpose);
+                
+                let agent = conversation.participants.find(p => p.purpose == 'agent');
+                communicationId = agent.chats[0].id;
             }
 
             break;
@@ -53,12 +57,28 @@ let onMessage = (data) => {
 /**
  * Translate then send message to the customer
  */
-function sendMessage(){
+function sendChat(){
     let message = document.getElementById("message-textarea").value;
-    let translatedMsg = translate.translateToEng(message);
 
-    view.addChatMessage(userName, translatedMsg, "agent");
+    // Wait for translate to finish before calling addChatMessage
+    translate.translateToEng(message, function(translatedMsg) {
+        view.addChatMessage(userName, translatedMsg, "agent");
+        sendMessage(translatedMsg, currentConversationId, communicationId);
+    });
 };
+
+/**
+ * TSend message to the customer
+ */
+function sendMessage(message, conversationId, communicationId){
+    conversationsApi.postConversationsChatCommunicationMessages(
+        conversationId, communicationId,
+        {
+            "body": message,
+            "bodyType": "standard"
+        }
+    )
+}
 
 /**
  * Show the chat messages for a conversation
@@ -85,9 +105,11 @@ function showChatTranscript(conversationId){
                 let purpose = conversation
                             .participants.find(p => p.chats[0].id == senderId)
                             .purpose;
-                
-                translatedMsg = translate.translateToEng(message);
-                view.addChatMessage(name, translatedMsg, purpose);
+
+                // Wait for translate to finish before calling addChatMessage
+                translate.translateToEng(message, function(translatedMsg) {
+                    view.addChatMessage(name, translatedMsg, purpose);
+                });
             }
         });
     });
@@ -121,15 +143,16 @@ function subscribeChatConversation(conversationId){
  *                       EVENT HANDLERS
  * -------------------------------------------------------------- */
 document.getElementById("chat-form")
-    .addEventListener("submit", () => sendMessage());
+    .addEventListener("submit", () => sendChat());
 
 document.getElementById('btn-send-message')
-    .addEventListener('click', () => sendMessage());
+    .addEventListener('click', () => sendChat());
 
 document.getElementById("message-textarea")
     .addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
-            $('#chat-form').submit();
+            // $('#chat-form').submit();
+            sendChat();
         }
     })
 
