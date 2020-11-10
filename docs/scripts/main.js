@@ -1,4 +1,6 @@
+import view from './view.js';
 import controller from './notifications-controller.js';
+import translate from './translate-service.js'
 
 // Obtain a reference to the platformClient object
 const platformClient = require('platformClient');
@@ -9,6 +11,7 @@ const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
 
 let userId = '';
+let userName = '';
 let currentConversation = null;
 let currentConversationId = '';
 
@@ -26,7 +29,6 @@ let onMessage = (data) => {
             // Values from the event
             let eventBody = data.eventBody;
             let message = eventBody.body;
-            let convId = eventBody.conversation.id;
             let senderId = eventBody.sender.id;
 
             // Conversation values for cross reference
@@ -34,10 +36,23 @@ let onMessage = (data) => {
             let name = participant.name;
             let purpose = participant.purpose;
 
-            addChatMessage(name, message, convId, purpose);
+            let translatedMsg = null;
+            translatedMsg = translate.translateToEng(message);
+
+            view.addChatMessage(name, translatedMsg, purpose);
 
             break;
     }
+};
+
+/**
+ * Translate then send message to the customer
+ */
+function sendMessage(){
+    let message = document.getElementById("message-textarea").value;
+    let translatedMsg = translate.translateToEng(message);
+
+    view.addChatMessage(userName, translatedMsg, "agent");
 };
 
 /**
@@ -50,13 +65,11 @@ function showChatTranscript(conversationId){
 
     return conversationsApi.getConversationsChatMessages(conversationId)
     .then((data) => {
-        // view.displayTranscript(data.entities, conversation);
-        let conversationId = conversation.id;
-
         // Show each message
         data.entities.forEach((msg) => {
             if(msg.hasOwnProperty("body")) {
                 let message = msg.body;
+                let translatedMsg = null;
 
                 // Determine the name by cross referencing sender id 
                 // with the participant.chats.id from the conversation parameter
@@ -68,28 +81,11 @@ function showChatTranscript(conversationId){
                             .participants.find(p => p.chats[0].id == senderId)
                             .purpose;
                 
-                addChatMessage(name, message, conversationId, purpose);
+                translatedMsg = translate.translateToEng(message);
+                view.addChatMessage(name, translatedMsg, purpose);
             }
         });
     });
-}
-
-/**
- * Add a new chat message to the page.
- * @param {String} sender sender name to be displayed
- * @param {String} message chat message to be displayed
- * @param {String} conversationId PureCLoud conversationid
- */
-function addChatMessage(sender, message, conversationId, purpose){        
-    var chatMsg = document.createElement("p");
-    chatMsg.textContent = sender + ": " + message;
-
-    var container = document.createElement("div");
-    container.appendChild(chatMsg);
-    container.className = "chat-message " + purpose;
-    document.getElementById("agent-assist").appendChild(container);
-
-    window.scrollTo({ top: 1000000, behavior: 'smooth' });
 }
 
 /**
@@ -117,6 +113,21 @@ function subscribeChatConversation(conversationId){
 }
 
 /** --------------------------------------------------------------
+ *                       EVENT HANDLERS
+ * -------------------------------------------------------------- */
+document.getElementById("chat-form")
+    .addEventListener("submit", () => sendMessage());
+
+document.getElementById('btn-send-message')
+    .addEventListener('click', () => sendMessage());
+
+document.getElementById("message-textarea")
+    .addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        $('#chat-form').submit();
+    }
+
+/** --------------------------------------------------------------
  *                       INITIAL SETUP
  * -------------------------------------------------------------- */
 const urlParams = new URLSearchParams(window.location.search);
@@ -136,6 +147,7 @@ client.loginImplicitGrant(
     return usersApi.getUsersMe();
 }).then(userMe => {
     userId = userMe.id;
+    userName = userMe.name;
 
     // Get current conversation
     return conversationsApi.getConversation(currentConversationId);
