@@ -1,4 +1,3 @@
-import agentAssistant from './agent-assistant.js';
 import controller from './notifications-controller.js';
 
 // Obtain a reference to the platformClient object
@@ -10,7 +9,6 @@ const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
 
 let userId = '';
-let agentID;
 let currentConversation = null;
 let currentConversationId = '';
 
@@ -32,25 +30,67 @@ let onMessage = (data) => {
             let senderId = eventBody.sender.id;
 
             // Conversation values for cross reference
-            let conversation = currentConversation;
             let participant = conversation.participants.find(p => p.chats[0].id == senderId);
+            let name = participant.name;
             let purpose = participant.purpose;
 
-            // Get agent communication ID
-            if(purpose == 'agent') {
-                agentID = senderId;
-                agentAssistant.clearStackedText();
-            } else {
-                let agent = conversation.participants.find(p => p.purpose == 'agent');
-                agentID = agent.chats[0].id;
-            }
-
-            // Get some recommended replies
-            if(purpose == 'customer') agentAssistant.getRecommendations(message, convId, agentID);
+            addChatMessage(name, message, convId, purpose);
 
             break;
     }
 };
+
+/**
+ * Show the chat messages for a conversation
+ * @param {String} conversationId 
+ * @returns {Promise} 
+ */
+function showChatTranscript(conversationId){
+    let conversation = activeConversations.find(c => c.id == conversationId);
+
+    return conversationsApi.getConversationsChatMessages(conversationId)
+    .then((data) => {
+        // view.displayTranscript(data.entities, conversation);
+        let conversationId = conversation.id;
+
+        // Show each message
+        data.entities.forEach((msg) => {
+            if(msg.hasOwnProperty("body")) {
+                let message = msg.body;
+
+                // Determine the name by cross referencing sender id 
+                // with the participant.chats.id from the conversation parameter
+                let senderId = msg.sender.id;
+                let name = conversation
+                            .participants.find(p => p.chats[0].id == senderId)
+                            .name;
+                let purpose = conversation
+                            .participants.find(p => p.chats[0].id == senderId)
+                            .purpose;
+                
+                addChatMessage(name, message, conversationId, purpose);
+            }
+        });
+    });
+}
+
+/**
+ * Add a new chat message to the page.
+ * @param {String} sender sender name to be displayed
+ * @param {String} message chat message to be displayed
+ * @param {String} conversationId PureCLoud conversationid
+ */
+function addChatMessage(sender, message, conversationId, purpose){        
+    var chatMsg = document.createElement("p");
+    chatMsg.textContent = sender + ": " + message;
+
+    var container = document.createElement("div");
+    container.appendChild(chatMsg);
+    container.className = "chat-message " + purpose;
+    document.getElementById("agent-assist").appendChild(container);
+
+    window.scrollTo({ top: 1000000, behavior: 'smooth' });
+}
 
 /**
  * Set-up the channel for chat conversations
@@ -103,6 +143,9 @@ client.loginImplicitGrant(
     currentConversation = conv;
 
     return setupChatChannel();
+}).then(data => { 
+    // Get current chat conversations
+    return showChatTranscript(currentConversationId);
 }).then(data => {
     console.log('Finished Setup');
 

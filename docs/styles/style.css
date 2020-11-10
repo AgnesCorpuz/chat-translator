@@ -45,3 +45,55 @@ hr {
 
     font-style: italic;
 }
+
+.chat-message {
+    background-color: #F2F2F2;
+    border-radius: 5px;
+    box-shadow: 0 0 6px #B2B2B2;
+    display: inline-block;
+    padding: 10px 18px;
+    position: relative;
+    vertical-align: top;
+    width: 55%;
+}
+
+.chat-message::before {
+    background-color: #F2F2F2;
+    content: "\00a0";
+    display: block;
+    height: 16px;
+    position: absolute;
+    top: 11px;
+    transform:             rotate( 29deg ) skew( -35deg );
+        -moz-transform:    rotate( 29deg ) skew( -35deg );
+        -ms-transform:     rotate( 29deg ) skew( -35deg );
+        -o-transform:      rotate( 29deg ) skew( -35deg );
+        -webkit-transform: rotate( 29deg ) skew( -35deg );
+    width:  20px;
+}
+
+.customer {
+    background-color: white;
+    color: #FF4F1F;
+    float: left;   
+    margin: 5px 45px 5px 20px;   
+}
+
+.customer::before {
+    background-color: white;
+    box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
+    left: -9px;
+}
+
+.agent {
+    background-color: #FF4F1F;
+    color: white;
+    float: right;    
+    margin: 5px 20px 5px 45px;   
+}
+
+.agent::before {
+    background-color: #FF4F1F;
+    box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
+    right: -9px;   
+}
