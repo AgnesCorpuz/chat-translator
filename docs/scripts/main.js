@@ -30,7 +30,7 @@ let onMessage = (data) => {
             let senderId = eventBody.sender.id;
 
             // Conversation values for cross reference
-            let participant = conversation.participants.find(p => p.chats[0].id == senderId);
+            let participant = currentConversation.participants.find(p => p.chats[0].id == senderId);
             let name = participant.name;
             let purpose = participant.purpose;
 
