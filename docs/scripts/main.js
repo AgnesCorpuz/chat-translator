@@ -38,10 +38,9 @@ let onMessage = (data) => {
 
             // Call translate service if message from customer
             if(purpose == 'customer') {
-                return translate.translateToEng(message)
-                .then((translatedMsg) => {
+                translate.translateToEng(message), function(translatedMsg) {
                     view.addChatMessage(name, translatedMsg, purpose);
-                });
+                }
             } else if (purpose == 'agent') {
                 view.addChatMessage(name, message, purpose);
             }
