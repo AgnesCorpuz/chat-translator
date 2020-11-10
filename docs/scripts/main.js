@@ -42,9 +42,9 @@ let onMessage = (data) => {
                 // translate.translateToEng(message), function(translatedMsg) {
                 //     view.addChatMessage(name, translatedMsg, purpose);
                 // }
-                translateToEng(message), function(translatedMsg) {
+                translateToEng(message, function(translatedMsg) {
                     view.addChatMessage(name, translatedMsg, purpose);
-                }
+                });
             } else if (purpose == 'agent') {
                 view.addChatMessage(name, message, purpose);
             }
