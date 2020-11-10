@@ -39,7 +39,10 @@ let onMessage = (data) => {
             // Call translate service if message from customer
             if(purpose == 'customer') {
                 // Wait for translate to finish before calling addChatMessage
-                translate.translateToEng(message), function(translatedMsg) {
+                // translate.translateToEng(message), function(translatedMsg) {
+                //     view.addChatMessage(name, translatedMsg, purpose);
+                // }
+                translateToEng(message), function(translatedMsg) {
                     view.addChatMessage(name, translatedMsg, purpose);
                 }
             } else if (purpose == 'agent') {
@@ -49,6 +52,34 @@ let onMessage = (data) => {
             break;
     }
 };
+
+function translateToEng(text, translated){
+    // Sample body ng kailangan itranslate
+    let data = {
+        raw_text: text,
+        source_language: 'auto',
+        target_language: 'en'
+    }
+
+    fetch('https://i0k1088d5m.execute-api.us-east-1.amazonaws.com/chat-assistant-translate',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }
+    )
+    .then(response => response.json())
+    .then(translationData => {
+        // Response nung translation
+        let translated_text = translationData.translated_text;
+        console.log(translated_text);
+
+        translated(translated_text);
+    })
+    .catch(e => console.error(e));
+}
 
 /**
  * Translate then send message to the customer
