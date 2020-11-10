@@ -37,9 +37,14 @@ let onMessage = (data) => {
             let purpose = participant.purpose;
 
             // Call translate service if message from customer
-            if(purpose == 'customer') message = translate.translateToEng(message);
-
-            view.addChatMessage(name, message, purpose);
+            if(purpose == 'customer') {
+                return translate.translateToEng(message)
+                .then((translatedMsg) => {
+                    view.addChatMessage(name, translatedMsg, purpose);
+                });
+            } else if (purpose == 'agent') {
+                view.addChatMessage(name, message, purpose);
+            }
 
             break;
     }
