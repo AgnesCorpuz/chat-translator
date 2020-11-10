@@ -36,10 +36,10 @@ let onMessage = (data) => {
             let name = participant.name;
             let purpose = participant.purpose;
 
-            let translatedMsg = null;
-            translatedMsg = translate.translateToEng(message);
+            // Call translate service if message from customer
+            if(purpose == 'customer') message = translate.translateToEng(message);
 
-            view.addChatMessage(name, translatedMsg, purpose);
+            view.addChatMessage(name, message, purpose);
 
             break;
     }
