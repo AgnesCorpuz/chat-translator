@@ -1,5 +1,5 @@
 export default {
-    translateToEng(text){
+    translateToEng(text, callback){
         // Sample body ng kailangan itranslate
         let data = {
             raw_text: text,
@@ -22,7 +22,7 @@ export default {
             let translated_text = translationData.translated_text;
             console.log(translated_text);
 
-            return(translated_text);
+            callback(translated_text);
         })
         .catch(e => console.error(e));
     },

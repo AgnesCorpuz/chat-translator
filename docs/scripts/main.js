@@ -38,6 +38,7 @@ let onMessage = (data) => {
 
             // Call translate service if message from customer
             if(purpose == 'customer') {
+                // Wait for translate to finish before calling addChatMessage
                 translate.translateToEng(message), function(translatedMsg) {
                     view.addChatMessage(name, translatedMsg, purpose);
                 }
