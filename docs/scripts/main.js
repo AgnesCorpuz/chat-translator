@@ -123,9 +123,10 @@ document.getElementById('btn-send-message')
 
 document.getElementById("message-textarea")
     .addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        $('#chat-form').submit();
-    }
+        if (e.key === 'Enter') {
+            $('#chat-form').submit();
+        }
+    })
 
 /** --------------------------------------------------------------
  *                       INITIAL SETUP
