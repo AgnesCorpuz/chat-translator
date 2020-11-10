@@ -27,6 +27,7 @@ body {
 
 #agent-assist {
     width: 100%;
+    height: 350px;
 }
 
 hr {
@@ -96,4 +97,34 @@ hr {
     background-color: #FF4F1F;
     box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
     right: -9px;   
+}
+
+.chat-box {
+    padding: 0px 20px 0px 20px;
+    border-top: 1px solid #ccc;
+    background-color: rgb(244, 244, 244);
+}
+
+.top-chat-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    height: 20px;
+    min-height: 20px;
+    max-height: 20px;
+    padding-top: 2px;
+    color: #999999;
+}
+
+.bottom-chat-box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 11px;
+    height: 20px;
+    min-height: 20px;
+    max-height: 20px;
+    padding-top: 2px;
+    color: #999999;
 }

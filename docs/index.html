@@ -20,10 +20,14 @@
         <!-- <label class="label">Agent Assistant:</label> -->
         <div class="field" id="agent-assist">
         </div>
-        <form name="message" action="">
-          <input type="text" id="agent-message">
-          <input type="submit" id="submit-message" value="Translate and Send">
-        </form>
+        <div class="chat-box">
+          <div class="top-chat-box"></div>
+          <form name="message" action="">
+            <textarea class="message-input form-control acd-chat-reply-textarea" spellcheck="true"></textarea>
+            <button value="Translate and Send" type="submit" class="sr-only"></button>
+          </form>
+          <div class="bottom-chat-box"></div>
+        </div>
       </div>
     </div>
   </body>
