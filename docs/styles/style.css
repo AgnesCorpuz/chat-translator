@@ -19,7 +19,7 @@ body {
 }
 
 .agent-assistant a{
-    color: #FF4F1F;
+    color: #23395D;
 }
 
 .agent-assistant a:hover{
@@ -76,7 +76,7 @@ hr {
 
 .customer {
     background-color: white;
-    color: #FF4F1F;
+    color: #23395D;
     float: left;   
     margin: 5px 45px 5px 20px;   
 }
@@ -88,14 +88,14 @@ hr {
 }
 
 .agent {
-    background-color: #FF4F1F;
+    background-color:  #23395D;
     color: white;
     float: right;    
     margin: 5px 20px 5px 45px;   
 }
 
 .agent::before {
-    background-color: #FF4F1F;
+    background-color:  #23395D;
     box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
     right: -9px;   
 }
