@@ -46,7 +46,11 @@ let onMessage = (data) => {
                     translationData = translatedData;
                 });
             } else if (purpose == 'agent') {
-                view.addChatMessage(name, message, purpose);
+                // Wait for translate to finish before calling addChatMessage
+                translate.translateToEng(message, function(translatedData) {
+                    view.addChatMessage(name, translatedData.translated_text, purpose);
+                    translationData = translatedData;
+                });
                 
                 let agent = currentConversation.participants.find(p => p.purpose == 'agent');
                 communicationId = agent.chats[0].id;
@@ -155,9 +159,10 @@ document.getElementById('btn-send-message')
 document.getElementById("message-textarea")
     .addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
-            // $('#chat-form').submit();
             sendChat();
         }
+
+        return false;
     })
 
 /** --------------------------------------------------------------
