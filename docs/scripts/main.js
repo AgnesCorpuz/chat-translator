@@ -113,6 +113,7 @@ function showChatTranscript(conversationId){
                 // Wait for translate to finish before calling addChatMessage
                 translate.translateToEng(message, function(translatedData) {
                     view.addChatMessage(name, translatedData.translated_text, purpose);
+                    translationData = translatedData;
                 });
             }
         });
