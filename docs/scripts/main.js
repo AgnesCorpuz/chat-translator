@@ -63,10 +63,10 @@ function sendChat(){
     let message = document.getElementById("message-textarea").value;
 
     // Translate text to customer's local language
-    translate.translateText(message, translationData.source_language, function(translatedMsg) {
+    translate.translateText(message, translationData.source_language, function(translatedData) {
         // Wait for translate to finish before calling addChatMessage
-        view.addChatMessage(userName, translatedMsg, "agent");
-        sendMessage(translatedMsg, currentConversationId, communicationId);
+        view.addChatMessage(userName, translatedData.translated_text, "agent");
+        sendMessage(translatedData.translated_text, currentConversationId, communicationId);
     });
 
     document.getElementById("message-textarea").setAttribute("value", "");
@@ -91,8 +91,6 @@ function sendMessage(message, conversationId, communicationId){
  * @returns {Promise} 
  */
 function showChatTranscript(conversationId){
-    let conversation = conversationsApi.getConversation(conversationId);
-
     return conversationsApi.getConversationsChatMessages(conversationId)
     .then((data) => {
         // Show each message
@@ -103,10 +101,10 @@ function showChatTranscript(conversationId){
                 // Determine the name by cross referencing sender id 
                 // with the participant.chats.id from the conversation parameter
                 let senderId = msg.sender.id;
-                let name = conversation
+                let name = currentConversation
                             .participants.find(p => p.chats[0].id == senderId)
                             .name;
-                let purpose = conversation
+                let purpose = currentConversation
                             .participants.find(p => p.chats[0].id == senderId)
                             .purpose;
 
