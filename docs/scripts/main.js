@@ -16,6 +16,7 @@ let currentConversation = null;
 let currentConversationId = '';
 let communicationId;
 let translationData = null;
+let genesysCloudLanguage = 'en-us';
 
 /**
  * Callback function for 'message' and 'typing-indicator' events.
@@ -41,13 +42,13 @@ let onMessage = (data) => {
             // Call translate service if message from customer
             if(purpose == 'customer') {
                 // Wait for translate to finish before calling addChatMessage
-                translate.translateToEng(message, function(translatedData) {
+                translate.translateText(message, genesysCloudLanguage, function(translatedData) {
                     view.addChatMessage(name, translatedData.translated_text, purpose);
                     translationData = translatedData;
                 });
             } else if (purpose == 'agent') {
                 // Wait for translate to finish before calling addChatMessage
-                translate.translateToEng(message, function(translatedData) {
+                translate.translateText(message, genesysCloudLanguage, function(translatedData) {
                     view.addChatMessage(name, translatedData.translated_text, purpose);
                     translationData = translatedData;
                 });
@@ -114,7 +115,7 @@ function showChatTranscript(conversationId){
                             .purpose;
 
                 // Wait for translate to finish before calling addChatMessage
-                translate.translateToEng(message, function(translatedData) {
+                translate.translateToEng(message, genesysCloudLanguage, function(translatedData) {
                     view.addChatMessage(name, translatedData.translated_text, purpose);
                     translationData = translatedData;
                 });
@@ -170,6 +171,7 @@ document.getElementById("message-textarea")
  * -------------------------------------------------------------- */
 const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
+genesysCloudLanguage = urlParams.get('language');
 
 client.loginImplicitGrant(
     '5f3e661d-61be-4a13-b536-3f54f24e26c9',
