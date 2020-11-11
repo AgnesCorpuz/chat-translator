@@ -115,7 +115,7 @@ function showChatTranscript(conversationId){
                             .purpose;
 
                 // Wait for translate to finish before calling addChatMessage
-                translate.translateToEng(message, genesysCloudLanguage, function(translatedData) {
+                translate.translateText(message, genesysCloudLanguage, function(translatedData) {
                     view.addChatMessage(name, translatedData.translated_text, purpose);
                     translationData = translatedData;
                 });
