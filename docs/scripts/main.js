@@ -69,7 +69,7 @@ function sendChat(){
         sendMessage(translatedData.translated_text, currentConversationId, communicationId);
     });
 
-    document.getElementById("message-textarea").setAttribute("value", "");
+    document.getElementById("message-textarea").value = '';
 };
 
 /**
@@ -109,8 +109,8 @@ function showChatTranscript(conversationId){
                             .purpose;
 
                 // Wait for translate to finish before calling addChatMessage
-                translate.translateToEng(message, function(translatedMsg) {
-                    view.addChatMessage(name, translatedMsg, purpose);
+                translate.translateToEng(message, function(translatedData) {
+                    view.addChatMessage(name, translatedData.translated_text, purpose);
                 });
             }
         });
