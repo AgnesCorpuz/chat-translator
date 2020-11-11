@@ -91,7 +91,7 @@ function sendMessage(message, conversationId, communicationId){
  * @returns {Promise} 
  */
 function showChatTranscript(conversationId){
-    let conversation = activeConversations.find(c => c.id == conversationId);
+    let conversation = conversationsApi.getConversation(conversationId);
 
     return conversationsApi.getConversationsChatMessages(conversationId)
     .then((data) => {

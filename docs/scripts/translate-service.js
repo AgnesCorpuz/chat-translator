@@ -24,7 +24,7 @@ export default {
         .catch(e => console.error(e));
     },
 
-    translateText(text, language){
+    translateText(text, language, callback){
         let data = {
             raw_text: text,
             source_language: 'auto',
@@ -44,7 +44,7 @@ export default {
         .then(translationData => {
             console.log(JSON.stringify(translationData));
 
-            return(translationData);
+            callback(translationData);
         })
         .catch(e => console.error(e));
     }
