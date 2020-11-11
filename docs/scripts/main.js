@@ -61,6 +61,8 @@ let onMessage = (data) => {
  */
 function sendChat(){
     let message = document.getElementById("message-textarea").value;
+    let agent = currentConversation.participants.find(p => p.purpose == 'agent');
+    communicationId = agent.chats[0].id;
 
     // Translate text to customer's local language
     translate.translateText(message, translationData.source_language, function(translatedData) {
