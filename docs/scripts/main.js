@@ -15,6 +15,7 @@ let userName = '';
 let currentConversation = null;
 let currentConversationId = '';
 let communicationId;
+let translationData = null;
 
 /**
  * Callback function for 'message' and 'typing-indicator' events.
@@ -40,8 +41,9 @@ let onMessage = (data) => {
             // Call translate service if message from customer
             if(purpose == 'customer') {
                 // Wait for translate to finish before calling addChatMessage
-                translate.translateToEng(message, function(translatedMsg) {
-                    view.addChatMessage(name, translatedMsg, purpose);
+                translate.translateToEng(message, function(translatedData) {
+                    view.addChatMessage(name, translatedData.translated_text, purpose);
+                    translationData = translatedData;
                 });
             } else if (purpose == 'agent') {
                 view.addChatMessage(name, message, purpose);
@@ -60,13 +62,14 @@ let onMessage = (data) => {
 function sendChat(){
     let message = document.getElementById("message-textarea").value;
 
-    // Wait for translate to finish before calling addChatMessage
-    translate.translateToEng(message, function(translatedMsg) {
+    // Translate text to customer's local language
+    translate.translateText(message, translationData.source_language, function(translatedMsg) {
+        // Wait for translate to finish before calling addChatMessage
         view.addChatMessage(userName, translatedMsg, "agent");
         sendMessage(translatedMsg, currentConversationId, communicationId);
     });
 
-    document.getElementById("message-textarea").value = '';
+    document.getElementById("message-textarea").setAttribute("value", "");
 };
 
 /**
@@ -96,7 +99,6 @@ function showChatTranscript(conversationId){
         data.entities.forEach((msg) => {
             if(msg.hasOwnProperty("body")) {
                 let message = msg.body;
-                let translatedMsg = null;
 
                 // Determine the name by cross referencing sender id 
                 // with the participant.chats.id from the conversation parameter

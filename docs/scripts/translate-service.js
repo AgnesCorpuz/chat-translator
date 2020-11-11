@@ -1,6 +1,5 @@
 export default {
     translateToEng(text, callback){
-        // Sample body ng kailangan itranslate
         let data = {
             raw_text: text,
             source_language: 'auto',
@@ -18,18 +17,14 @@ export default {
         )
         .then(response => response.json())
         .then(translationData => {
-            // Response nung translation
-            let translated_text = translationData.translated_text;
-            console.log(translated_text);
             console.log(JSON.stringify(translationData));
 
-            callback(translated_text);
+            callback(translationData);
         })
         .catch(e => console.error(e));
     },
 
     translateText(text, language){
-        // Sample body ng kailangan itranslate
         let data = {
             raw_text: text,
             source_language: 'auto',
@@ -47,11 +42,9 @@ export default {
         )
         .then(response => response.json())
         .then(translationData => {
-            // Response nung translation
-            let translated_text = translationData.translated_text;
-            console.log(translated_text);
+            console.log(JSON.stringify(translationData));
 
-            return(translated_text);
+            return(translationData);
         })
         .catch(e => console.error(e));
     }
