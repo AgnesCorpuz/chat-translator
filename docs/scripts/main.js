@@ -160,9 +160,9 @@ document.getElementById("message-textarea")
     .addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             sendChat();
+            if(e.preventDefault) e.preventDefault(); // prevent new line
+            return false; // Just a workaround for old browsers
         }
-
-        return false;
     })
 
 /** --------------------------------------------------------------
