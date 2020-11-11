@@ -66,8 +66,7 @@ function sendChat(){
 
     // Translate text to customer's local language
     translate.translateText(message, translationData.source_language, function(translatedData) {
-        // Wait for translate to finish before calling addChatMessage
-        view.addChatMessage(userName, translatedData.translated_text, "agent");
+        // Wait for translate to finish before calling sendMessage
         sendMessage(translatedData.translated_text, currentConversationId, communicationId);
     });
 
