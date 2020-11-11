@@ -173,15 +173,21 @@ const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
 genesysCloudLanguage = urlParams.get('language');
 
+client.setPersistSettings(true, 'chat-translator');
 client.loginImplicitGrant(
     '5f3e661d-61be-4a13-b536-3f54f24e26c9',
-    'https://agnescorpuz.github.io/chat-translator/',
-    { state: currentConversationId })
+    'https://genesysappfoundry.github.io/chat-translator/',
+    { state: JSON.stringify({
+        conversationId: currentConversationId,
+        language: genesysCloudLanguage
+    }) })
 .then(data => {
     console.log(data);
 
     // Assign conversation id
-    currentConversationId = data.state;
+    let stateData = JSON.parse(data.state);
+    currentConversationId = stateData.conversationId;
+    genesysCloudLanguage = stateData.language;
     
     // Get Details of current User
     return usersApi.getUsersMe();
