@@ -2,7 +2,8 @@
  * This script is focused on the HTML / displaying of data to the page
  */
 function updateScroll() {
-    window.scrollTo({ top: 1000000, behavior: 'smooth' });
+    var div = document.getElementById('agent-assist');
+    div.scrollTop = div.scrollHeight;
 }
 
 export default {
