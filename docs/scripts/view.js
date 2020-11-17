@@ -13,13 +13,13 @@ export default {
      * @param {String} message chat message to be displayed
      */
     addChatMessage(sender, message, purpose){        
-        var chatMsg = document.createElement("p");
-        chatMsg.textContent = sender + ": " + message;
+        var chatMsg = document.createElement('p');
+        chatMsg.textContent = sender + ': ' + message;
 
-        var container = document.createElement("div");
+        var container = document.createElement('div');
         container.appendChild(chatMsg);
-        container.className = "chat-message " + purpose;
-        document.getElementById("agent-assist").appendChild(container);
+        container.className = 'chat-message ' + purpose;
+        document.getElementById('agent-assist').appendChild(container);
 
         updateScroll();
     }

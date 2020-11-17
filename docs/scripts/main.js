@@ -11,10 +11,8 @@ const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
 
 let userId = '';
-let userName = '';
 let currentConversation = null;
 let currentConversationId = '';
-let communicationId;
 let translationData = null;
 let genesysCloudLanguage = 'en-us';
 
@@ -39,35 +37,23 @@ let onMessage = (data) => {
             let name = participant.name;
             let purpose = participant.purpose;
 
-            // Call translate service if message from customer
-            if(purpose == 'customer') {
-                // Wait for translate to finish before calling addChatMessage
-                translate.translateText(message, genesysCloudLanguage, function(translatedData) {
-                    view.addChatMessage(name, translatedData.translated_text, purpose);
-                    translationData = translatedData;
-                });
-            } else if (purpose == 'agent') {
-                // Wait for translate to finish before calling addChatMessage
-                translate.translateText(message, genesysCloudLanguage, function(translatedData) {
-                    view.addChatMessage(name, translatedData.translated_text, purpose);
-                    translationData = translatedData;
-                });
-                
-                let agent = currentConversation.participants.find(p => p.purpose == 'agent');
-                communicationId = agent.chats[0].id;
-            }
+            // Wait for translate to finish before calling addChatMessage
+            translate.translateText(message, genesysCloudLanguage, function(translatedData) {
+                view.addChatMessage(name, translatedData.translated_text, purpose);
+                translationData = translatedData;
+            });
 
             break;
     }
 };
 
 /**
- * Translate then send message to the customer
+ *  Translate then send message to the customer
  */
 function sendChat(){
-    let message = document.getElementById("message-textarea").value;
+    let message = document.getElementById('message-textarea').value;
     let agent = currentConversation.participants.find(p => p.purpose == 'agent');
-    communicationId = agent.chats[0].id;
+    let communicationId = agent.chats[0].id;
 
     // Translate text to customer's local language
     translate.translateText(message, translationData.source_language, function(translatedData) {
@@ -75,18 +61,18 @@ function sendChat(){
         sendMessage(translatedData.translated_text, currentConversationId, communicationId);
     });
 
-    document.getElementById("message-textarea").value = '';
+    document.getElementById('message-textarea').value = '';
 };
 
 /**
- * TSend message to the customer
+ *  Send message to the customer
  */
 function sendMessage(message, conversationId, communicationId){
     conversationsApi.postConversationsChatCommunicationMessages(
         conversationId, communicationId,
         {
-            "body": message,
-            "bodyType": "standard"
+            'body': message,
+            'bodyType': 'standard'
         }
     )
 }
@@ -101,7 +87,7 @@ function showChatTranscript(conversationId){
     .then((data) => {
         // Show each message
         data.entities.forEach((msg) => {
-            if(msg.hasOwnProperty("body")) {
+            if(msg.hasOwnProperty('body')) {
                 let message = msg.body;
 
                 // Determine the name by cross referencing sender id 
@@ -151,13 +137,13 @@ function subscribeChatConversation(conversationId){
 /** --------------------------------------------------------------
  *                       EVENT HANDLERS
  * -------------------------------------------------------------- */
-document.getElementById("chat-form")
-    .addEventListener("submit", () => sendChat());
+document.getElementById('chat-form')
+    .addEventListener('submit', () => sendChat());
 
 document.getElementById('btn-send-message')
     .addEventListener('click', () => sendChat());
 
-document.getElementById("message-textarea")
+document.getElementById('message-textarea')
     .addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             sendChat();
@@ -193,7 +179,6 @@ client.loginImplicitGrant(
     return usersApi.getUsersMe();
 }).then(userMe => {
     userId = userMe.id;
-    userName = userMe.name;
 
     // Get current conversation
     return conversationsApi.getConversation(currentConversationId);
