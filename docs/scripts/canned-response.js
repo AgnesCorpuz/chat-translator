@@ -38,6 +38,11 @@ function getResponses(libraryId){
 }
 
 /** --------------------------------------------------------------
- *                       ON PAGE LOAD
+ *                       INITIAL SETUP
  * -------------------------------------------------------------- */
-getLibraries();
+client.loginImplicitGrant(
+    '5f3e661d-61be-4a13-b536-3f54f24e26c9',
+    'https://genesysappfoundry.github.io/chat-translator/canned-response.html'
+).then(data => {
+    return getLibraries();
+})
