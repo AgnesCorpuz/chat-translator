@@ -21,7 +21,7 @@ function getResponses(libraryId){
     return responseManagementApi.getResponsemanagementResponses(libraryId)
     .then((responses) => {
         responses.entities.forEach((response) => {
-            view.displayResonses(response);
+            view.displayResponses(response);
         });
     });
 }
