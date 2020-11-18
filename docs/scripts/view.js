@@ -29,14 +29,14 @@ export default {
         libContainer.textContent = libraryName;
         libContainer.id = 'library-' + libraryId;
         libContainer.className = 'library';
-        libContainer.style.display = 'none';
         libContainer.addEventListener('click', function(event) {
             // Show or hide responses
-            var x = document.getElementById('#library-' + libraryId);
-            if (x.style.display === 'none') {
-                x.style.display = 'block';
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
             } else {
-                x.style.display = 'none';
+                content.style.display = "block";
             }
         });
 
@@ -47,15 +47,16 @@ export default {
         var responsesContainer = document.createElement('div');
         responsesContainer.textContent = response.name;
         responsesContainer.id = 'response-' + response.id;
-        responsesContainer.className = 'responses';
+        responsesContainer.className = 'responses content';
         responsesContainer.style.display = 'none';
         responsesContainer.addEventListener('click', function() {
             // Show or hide text content
-            var x = document.getElementById('#response-' + response.id);
-            if (x.style.display === 'none') {
-                x.style.display = 'block';
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
             } else {
-                x.style.display = 'none';
+                content.style.display = "block";
             }
         });
 
