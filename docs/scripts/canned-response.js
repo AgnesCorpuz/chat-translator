@@ -13,14 +13,12 @@ function getLibraries(){
         'pageSize': 25
     }];
     
-    let libraries = responseManagementApi.getResponsemanagementLibraries(body);
-
-    libraries.entities.foreach((library) => {
-        // Display all libraries
-        view.displayLibraries(library.id, library.name);
-
-        // Call function to get and manage response
-        getResponses(library.id);
+    return responseManagementApi.getResponsemanagementLibraries(body)
+    .then((libraries) => {
+        libraries.entities.foreach((library) => {
+            view.displayLibraries(library.id, library.name);
+            getResponses(library.id);
+        });
     });
 }
 
@@ -31,11 +29,11 @@ function getResponses(libraryId){
         'pageSize': 25
     }];
 
-    let responses = responseManagementApi.getResponsemanagementResponses(body);
-
-    responses.entities.foreach((response) => {
-        // Display all responses
-        view.displayResonses(response);
+    return responseManagementApi.getResponsemanagementResponses(body)
+    .then((responses) => {
+        responses.entities.foreach((response) => {
+            view.displayResonses(response);
+        });
     });
 }
 
