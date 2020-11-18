@@ -45,7 +45,7 @@ export default {
             }
         });
 
-        document.getElementById('canned-libraries-container').appendChild(libContainer);
+        document.getElementById('libraries-container').appendChild(libContainer);
     },
 
     displayResponses(response){
@@ -69,7 +69,7 @@ export default {
 
         var responsesContainer = document.createElement('div');
         responsesContainer.id = 'responses-container';
-        document.getElementById('canned-libraries-container').appendChild(responsesContainer);
+        document.getElementById('libraries-container').appendChild(responsesContainer);
 
         var responseButton = document.createElement('button');
         responseButton.textContent = response.name;
