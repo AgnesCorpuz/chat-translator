@@ -59,7 +59,7 @@ export default {
         for (var i = 0; i < element.length; i++) {
             element[i].addEventListener('click', function() {
                 this.classList.toggle('active');
-                var content = this.nextElementSibling;
+                var content = this.childNodes;
                 if (content.style.display === 'block') {
                     content.style.display = 'none';
                 } else {
