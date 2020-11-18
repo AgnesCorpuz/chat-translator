@@ -11,8 +11,8 @@ function updateScroll(){
  * @param {String} text 
  */
 function addResponseText(text){
-    document.getElementById('message-textarea').innerHTML = text;
-    window.location = 'index.html';
+    window.parent.document.getElementById('message-textarea').innerHTML = text;
+    window.parent.document.getElementById('chat-iframe').src = 'chat-translate.html';
 }
 
 export default {

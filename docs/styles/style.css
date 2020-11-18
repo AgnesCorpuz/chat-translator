@@ -19,11 +19,11 @@ hr {
     margin: 0px !important;
 }
 
-a{
+label{
     color: #23395D;
 }
 
-a:hover{
+label:hover{
     text-decoration: underline;
 }
 
