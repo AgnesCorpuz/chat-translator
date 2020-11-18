@@ -167,6 +167,9 @@ document.getElementById('message-textarea')
         }
     })
 
+document.getElementById('toggle-iframe')
+    .addEventListener('click', () => toggleIframe());
+
 /** --------------------------------------------------------------
  *                       INITIAL SETUP
  * -------------------------------------------------------------- */
