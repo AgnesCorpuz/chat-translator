@@ -28,13 +28,15 @@ export default {
         var libContainer = document.createElement('div');
         libContainer.textContent = libraryName;
         libContainer.id = 'library-' + libraryId;
+        libContainer.className = 'library';
+        libContainer.style.display = 'none';
         libContainer.addEventListener('click', function(event) {
             // Show or hide responses
-            var x = document.querySelectorAll('#library-' + libraryId);
-            if (x.style.display === "none") {
-                x.style.display = "block";
+            var x = document.getElementById('#library-' + libraryId);
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
             } else {
-                x.style.display = "none";
+                x.style.display = 'none';
             }
         });
 
@@ -45,19 +47,23 @@ export default {
         var responsesContainer = document.createElement('div');
         responsesContainer.textContent = response.name;
         responsesContainer.id = 'response-' + response.id;
+        responsesContainer.className = 'responses';
+        responsesContainer.style.display = 'none';
         responsesContainer.addEventListener('click', function() {
             // Show or hide text content
-            var x = document.querySelectorAll('#response-' + response.id);
-            if (x.style.display === "none") {
-                x.style.display = "block";
+            var x = document.getElementById('#response-' + response.id);
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
             } else {
-                x.style.display = "none";
+                x.style.display = 'none';
             }
         });
 
         var contentContainer = document.createElement('div');
         contentContainer.innerHTML = response.texts[0].content;
         contentContainer.id = 'response-content-' + response.id;
+        contentContainer.className = 'content';
+        contentContainer.style.display = 'none';
         contentContainer.addEventListener('click', function() {
             // Add response in textarea
             document.getElementById('message-textarea').innerHTML = response.texts[0].content;
