@@ -134,21 +134,6 @@ function subscribeChatConversation(conversationId){
             onMessage);
 }
 
-/**
- * This toggles between translator and canned response iframe
- */
-function toggleIframe(){
-    let label = document.getElementById('toggle-iframe').value;
-
-    if(label === 'Open Chat Translator'){
-        document.getElementById('chat-iframe').src = 'canned-response.html';
-        document.getElementById('toggle-iframe').value = 'Back to Chat Translator'
-    } else {
-        document.getElementById('chat-iframe').src = 'chat-translate.html';
-        document.getElementById('toggle-iframe').value = 'Open Chat Translator'
-    }
-}
-
 /** --------------------------------------------------------------
  *                       EVENT HANDLERS
  * -------------------------------------------------------------- */
@@ -165,10 +150,7 @@ document.getElementById('message-textarea')
             if(e.preventDefault) e.preventDefault(); // prevent new line
             return false; // Just a workaround for old browsers
         }
-    })
-
-document.getElementById('toggle-iframe')
-    .addEventListener('click', () => toggleIframe());
+    });
 
 /** --------------------------------------------------------------
  *                       INITIAL SETUP

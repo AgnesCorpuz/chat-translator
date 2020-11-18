@@ -1,10 +1,8 @@
-let iframe = document.getElementById("toggle-iframe");
-var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
 /**
  * This script is focused on the HTML / displaying of data to the page
  */
 function updateScroll(){
-    var div = innerDoc.getElementById('agent-assist');
+    var div = document.getElementById('agent-assist');
     div.scrollTop = div.scrollHeight;
 }
 
@@ -13,8 +11,8 @@ function updateScroll(){
  * @param {String} text 
  */
 function addResponseText(text){
-    window.parent.document.getElementById('message-textarea').innerHTML = text;
-    window.parent.document.getElementById('chat-iframe').src = 'chat-translate.html';
+    document.getElementById('message-textarea').innerHTML = text;
+    window.location = 'index.html';
 }
 
 export default {
@@ -30,7 +28,7 @@ export default {
         var container = document.createElement('div');
         container.appendChild(chatMsg);
         container.className = 'chat-message ' + purpose;
-        innerDoc.getElementById('agent-assist').appendChild(container);
+        document.getElementById('agent-assist').appendChild(container);
 
         updateScroll();
     },
@@ -54,12 +52,12 @@ export default {
                 content.style.display = 'block';	
             }	
         });
-        innerDoc.getElementById('libraries-container').appendChild(libContainer);
+        document.getElementById('libraries-container').appendChild(libContainer);
 
         var responsesContainer = document.createElement('div');
         responsesContainer.id = 'responses-container-' + libraryId;
         responsesContainer.className = 'content';
-        innerDoc.getElementById('libraries-container').appendChild(responsesContainer);
+        document.getElementById('libraries-container').appendChild(responsesContainer);
     },
 
     /**
@@ -81,7 +79,7 @@ export default {
                 content.style.display = 'block';	
             }	
         });
-        innerDoc.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseButton);
+        document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseButton);
 
         // Response text content
         var responseText = document.createElement('p');
@@ -89,6 +87,6 @@ export default {
         responseText.id = 'response-content-' + response.id;
         responseText.className = 'content';
         responseText.addEventListener('click', () => addResponseText(response.texts[0].content));
-        innerDoc.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseText);
+        document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseText);
     }
 }
