@@ -28,7 +28,7 @@ export default {
         var libContainer = document.createElement('div');
         libContainer.textContent = libraryName;
         libContainer.id = 'library-' + libraryId;
-        libContainer.className = 'library';
+        libContainer.className = 'collapsible';
         libContainer.addEventListener('click', function(event) {
             // Show or hide responses
             this.classList.toggle("active");
@@ -47,7 +47,7 @@ export default {
         var responsesContainer = document.createElement('div');
         responsesContainer.textContent = response.name;
         responsesContainer.id = 'response-' + response.id;
-        responsesContainer.className = 'responses content';
+        responsesContainer.className = 'collapsible content';
         responsesContainer.style.display = 'none';
         responsesContainer.addEventListener('click', function() {
             // Show or hide text content
