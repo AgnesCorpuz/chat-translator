@@ -6,6 +6,19 @@ function updateScroll() {
     div.scrollTop = div.scrollHeight;
 }
 
+/**
+ * Event handler for collapsible sections
+ */
+function addCollapsibleEvents(){
+    this.classList.toggle('active');
+    var content = this.nextElementSibling;
+    if (content.style.display === 'block') {
+        content.style.display = 'none';
+    } else {
+        content.style.display = 'block';
+    }
+}
+
 export default {
     /**
      * Add a new chat message to the page.
@@ -24,45 +37,45 @@ export default {
         updateScroll();
     },
 
+    /**
+     * Display list of libraries
+     * @param {String} libraryId 
+     * @param {String} libraryName 
+     */
     displayLibraries(libraryId, libraryName){
         var libContainer = document.createElement('button');
         libContainer.textContent = libraryName;
         libContainer.id = 'library-' + libraryId;
         libContainer.className = 'collapsible';
         libContainer.addEventListener('click', function() {
-            this.classList.toggle('active');
-            var content = this.nextElementSibling;
-            if (content.style.display === 'block') {
-                content.style.display = 'none';
-            } else {
-                content.style.display = 'block';
-            }
+            addCollapsibleEvents();
         });
 
         document.getElementById('libraries-container').appendChild(libContainer);
     },
 
+    /**
+     * Display responses and group by libraries
+     * @param {Object} response 
+     */
     displayResponses(response){
+        // DIV that will contain response name and text
         var responsesContainer = document.createElement('div');
         responsesContainer.id = 'responses-container-' + response.id;
         responsesContainer.className = 'content';
         document.getElementById('libraries-container').appendChild(responsesContainer);
 
+        // Collapsible response name
         var responseButton = document.createElement('button');
         responseButton.textContent = response.name;
         responseButton.id = 'response-' + response.id;
         responseButton.className = 'collapsible';
         responseButton.addEventListener('click', function() {
-            this.classList.toggle('active');
-            var content = this.nextElementSibling;
-            if (content.style.display === 'block') {
-                content.style.display = 'none';
-            } else {
-                content.style.display = 'block';
-            }
+            addCollapsibleEvents();
         });
-        document.getElementById('responses-container').appendChild(responseButton);
+        document.getElementById('responses-container-' + response.id).appendChild(responseButton);
 
+        // Response text content
         var responseText = document.createElement('p');
         responseText.textContent = response.texts[0].content;;
         responseText.id = 'response-content-' + response.id;
@@ -72,6 +85,6 @@ export default {
             document.getElementById('message-textarea').innerHTML = response.texts[0].content;
             window.location = 'index.html';
         });
-        document.getElementById('responses-container').appendChild(responseText);
+        document.getElementById('responses-container-' + response.id).appendChild(responseText);
     }
 }
