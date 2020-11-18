@@ -15,7 +15,7 @@ function getLibraries(){
     
     return responseManagementApi.getResponsemanagementLibraries(body)
     .then((libraries) => {
-        libraries.entities.foreach((library) => {
+        libraries.entities.forEach((library) => {
             view.displayLibraries(library.id, library.name);
             getResponses(library.id);
         });
@@ -31,7 +31,7 @@ function getResponses(libraryId){
 
     return responseManagementApi.getResponsemanagementResponses(body)
     .then((responses) => {
-        responses.entities.foreach((response) => {
+        responses.entities.forEach((response) => {
             view.displayResonses(response);
         });
     });
