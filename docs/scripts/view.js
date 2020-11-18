@@ -1,22 +1,18 @@
 /**
  * This script is focused on the HTML / displaying of data to the page
  */
-function updateScroll() {
+function updateScroll(){
     var div = document.getElementById('agent-assist');
     div.scrollTop = div.scrollHeight;
 }
 
 /**
- * Event handler for collapsible sections
+ * Add response in textarea
+ * @param {String} text 
  */
-function addCollapsibleEvents(){
-    this.classList.toggle('active');
-    var content = this.nextElementSibling;
-    if (content.style.display === 'block') {
-        content.style.display = 'none';
-    } else {
-        content.style.display = 'block';
-    }
+function addResponseText(text){
+    document.getElementById('message-textarea').innerHTML = text;
+    window.location = 'index.html';
 }
 
 export default {
@@ -48,9 +44,14 @@ export default {
         libContainer.id = 'library-' + libraryId;
         libContainer.className = 'collapsible';
         libContainer.addEventListener('click', function() {
-            addCollapsibleEvents();
+            this.classList.toggle('active');
+            var content = this.nextElementSibling;	
+            if (content.style.display === 'block') {	
+                content.style.display = 'none';	
+            } else {	
+                content.style.display = 'block';	
+            }	
         });
-
         document.getElementById('libraries-container').appendChild(libContainer);
     },
 
@@ -71,7 +72,13 @@ export default {
         responseButton.id = 'response-' + response.id;
         responseButton.className = 'collapsible';
         responseButton.addEventListener('click', function() {
-            addCollapsibleEvents();
+            this.classList.toggle('active');
+            var content = this.nextElementSibling;	
+            if (content.style.display === 'block') {	
+                content.style.display = 'none';	
+            } else {	
+                content.style.display = 'block';	
+            }	
         });
         document.getElementById('responses-container-' + response.id).appendChild(responseButton);
 
@@ -80,11 +87,7 @@ export default {
         responseText.textContent = response.texts[0].content;;
         responseText.id = 'response-content-' + response.id;
         responseText.className = 'content';
-        responseText.addEventListener('click', function() {
-            // Add response in textarea
-            document.getElementById('message-textarea').innerHTML = response.texts[0].content;
-            window.location = 'index.html';
-        });
+        responseText.addEventListener('click', () => addResponseText(response.texts[0].content));
         document.getElementById('responses-container-' + response.id).appendChild(responseText);
     }
 }
