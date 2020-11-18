@@ -11,15 +11,17 @@ function getLibraries(){
     return responseManagementApi.getResponsemanagementLibraries()
     .then((libraries) => {
         libraries.entities.forEach((library) => {
-            view.displayLibraries(library.id, library.name);
-            getResponses(library.id);
+            // view.displayLibraries(library.id, library.name);
+            getResponses(library.id, library.name);
         });
     });
 }
 
-function getResponses(libraryId){
+function getResponses(libraryId, libraryName){
     return responseManagementApi.getResponsemanagementResponses(libraryId)
     .then((responses) => {
+        view.displayLibraries(libraryId, libraryName);
+
         responses.entities.forEach((response) => {
             view.displayResponses(response);
             // view.addEventListeners();
