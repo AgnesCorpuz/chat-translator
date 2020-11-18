@@ -1,10 +1,10 @@
 let iframe = document.getElementById("toggle-iframe");
-
+var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
 /**
  * This script is focused on the HTML / displaying of data to the page
  */
 function updateScroll(){
-    var div = iframe.contentWindow.document.getElementById('agent-assist');
+    var div = innerDoc.getElementById('agent-assist');
     div.scrollTop = div.scrollHeight;
 }
 
@@ -30,7 +30,7 @@ export default {
         var container = document.createElement('div');
         container.appendChild(chatMsg);
         container.className = 'chat-message ' + purpose;
-        iframe.contentWindow.document.getElementById('agent-assist').appendChild(container);
+        innerDoc.getElementById('agent-assist').appendChild(container);
 
         updateScroll();
     },
@@ -54,12 +54,12 @@ export default {
                 content.style.display = 'block';	
             }	
         });
-        iframe.contentWindow.document.getElementById('libraries-container').appendChild(libContainer);
+        innerDoc.getElementById('libraries-container').appendChild(libContainer);
 
         var responsesContainer = document.createElement('div');
         responsesContainer.id = 'responses-container-' + libraryId;
         responsesContainer.className = 'content';
-        iframe.contentWindow.document.getElementById('libraries-container').appendChild(responsesContainer);
+        innerDoc.getElementById('libraries-container').appendChild(responsesContainer);
     },
 
     /**
@@ -81,7 +81,7 @@ export default {
                 content.style.display = 'block';	
             }	
         });
-        iframe.contentWindow.document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseButton);
+        innerDoc.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseButton);
 
         // Response text content
         var responseText = document.createElement('p');
@@ -89,6 +89,6 @@ export default {
         responseText.id = 'response-content-' + response.id;
         responseText.className = 'content';
         responseText.addEventListener('click', () => addResponseText(response.texts[0].content));
-        iframe.contentWindow.document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseText);
+        innerDoc.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseText);
     }
 }
