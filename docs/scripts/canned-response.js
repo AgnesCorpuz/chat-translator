@@ -7,13 +7,8 @@ const client = platformClient.ApiClient.instance;
 // API instances
 const responseManagementApi = new platformClient.ResponseManagementApi();
 
-function getLibraries(){
-    let body = [{
-        'pageNumber': 1,
-        'pageSize': 25
-    }];
-    
-    return responseManagementApi.getResponsemanagementLibraries(body)
+function getLibraries(){    
+    return responseManagementApi.getResponsemanagementLibraries()
     .then((libraries) => {
         libraries.entities.forEach((library) => {
             view.displayLibraries(library.id, library.name);
@@ -23,13 +18,7 @@ function getLibraries(){
 }
 
 function getResponses(libraryId){
-    let body = [{
-        'libraryId': libraryId,
-        'pageNumber': 1,
-        'pageSize': 25
-    }];
-
-    return responseManagementApi.getResponsemanagementResponses(body)
+    return responseManagementApi.getResponsemanagementResponses(libraryId)
     .then((responses) => {
         responses.entities.forEach((response) => {
             view.displayResonses(response);
