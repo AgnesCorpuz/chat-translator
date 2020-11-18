@@ -53,6 +53,11 @@ export default {
             }	
         });
         document.getElementById('libraries-container').appendChild(libContainer);
+
+        var responsesContainer = document.createElement('div');
+        responsesContainer.id = 'responses-container-' + libraryId;
+        responsesContainer.className = 'content';
+        document.getElementById('libraries-container').appendChild(responsesContainer);
     },
 
     /**
@@ -60,12 +65,6 @@ export default {
      * @param {Object} response 
      */
     displayResponses(response){
-        // DIV that will contain response name and text
-        var responsesContainer = document.createElement('div');
-        responsesContainer.id = 'responses-container-' + response.id;
-        responsesContainer.className = 'content';
-        document.getElementById('libraries-container').appendChild(responsesContainer);
-
         // Collapsible response name
         var responseButton = document.createElement('button');
         responseButton.textContent = response.name;
@@ -80,14 +79,14 @@ export default {
                 content.style.display = 'block';	
             }	
         });
-        document.getElementById('responses-container-' + response.id).appendChild(responseButton);
+        document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseButton);
 
         // Response text content
         var responseText = document.createElement('p');
-        responseText.textContent = response.texts[0].content;;
+        responseText.innerHTML = response.texts[0].content;
         responseText.id = 'response-content-' + response.id;
         responseText.className = 'content';
         responseText.addEventListener('click', () => addResponseText(response.texts[0].content));
-        document.getElementById('responses-container-' + response.id).appendChild(responseText);
+        document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseText);
     }
 }
