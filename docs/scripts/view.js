@@ -29,16 +29,6 @@ export default {
         libContainer.textContent = libraryName;
         libContainer.id = 'library-' + libraryId;
         libContainer.className = 'collapsible';
-        libContainer.addEventListener('click', function(event) {
-            // Show or hide responses
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "block";
-            }
-        });
 
         document.getElementById('libraries-container').appendChild(libContainer);
     },
@@ -48,23 +38,11 @@ export default {
         responsesContainer.textContent = response.name;
         responsesContainer.id = 'response-' + response.id;
         responsesContainer.className = 'collapsible content';
-        responsesContainer.style.display = 'none';
-        responsesContainer.addEventListener('click', function() {
-            // Show or hide text content
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "block";
-            }
-        });
 
         var contentContainer = document.createElement('div');
         contentContainer.innerHTML = response.texts[0].content;
         contentContainer.id = 'response-content-' + response.id;
         contentContainer.className = 'content';
-        contentContainer.style.display = 'none';
         contentContainer.addEventListener('click', function() {
             // Add response in textarea
             document.getElementById('message-textarea').innerHTML = response.texts[0].content;
@@ -73,5 +51,21 @@ export default {
 
         document.getElementById('library-' + response.libraries[0].id).appendChild(responsesContainer);
         document.getElementById('response-' + response.id).appendChild(contentContainer);
+    },
+
+    addEventListeners(){
+        var element = document.getElementsByClassName("collapsible");
+
+        for (var i = 0; i < element.length; i++) {
+            element[i].addEventListener('click', function() {
+                this.classList.toggle('active');
+                var content = this.nextElementSibling;
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+        }
     }
 }

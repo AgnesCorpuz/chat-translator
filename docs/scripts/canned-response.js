@@ -22,6 +22,7 @@ function getResponses(libraryId){
     .then((responses) => {
         responses.entities.forEach((response) => {
             view.displayResponses(response);
+            view.addEventListeners();
         });
     });
 }
