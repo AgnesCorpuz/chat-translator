@@ -179,7 +179,6 @@ function getResponses(libraryId, libraryName){
     });
 }
 
-
 function searchResponse(query){
     return responseManagementApi.postResponsemanagementResponsesQuery({'queryPhrase': query})
     .then((responses) => {
@@ -214,7 +213,8 @@ document.getElementById('find-response-btn')
     .addEventListener('click', function(){
         let query = document.getElementById('find-response').textContent;
         searchResponse(query);
-    })
+    });
+document.getElementById('find-response-btn')
     .addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             let query = document.getElementById('find-response').textContent;

@@ -186,7 +186,7 @@ a:hover{
     /* background-color: #f1f1f1; */
 }
 
-button {
+.collapsible {
     width: -webkit-fill-available;
 }
 
