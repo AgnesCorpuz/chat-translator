@@ -146,8 +146,10 @@ a:hover{
     margin: 10px;
 }
 
-.libraries-container {
+#libraries-container {
     margin: 10px;
+    height: 350px;
+    display: none;
 }
 
 .collapsible {
