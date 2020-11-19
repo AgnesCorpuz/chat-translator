@@ -55,10 +55,14 @@ function sendChat(){
     let message = document.getElementById('message-textarea').value;
     let agent = currentConversation.participants.find(p => p.purpose == 'agent');
     let communicationId = agent.chats[0].id;
+    let sourceLang;
 
-    // Default language to english if no source_language available
-    let sourceLang = translationData.source_language;
-    if(sourceLang === '') sourceLang = 'en';
+    // Default language to english if no source_language available    
+    if(translationData.source_language === '' || translationData.source_language === undefined) {
+        sourceLang = 'en';
+    } else {
+        sourceLang = translationData.source_language;
+    }
 
     // Translate text to customer's local language
     translate.translateText(message, sourceLang, function(translatedData) {
