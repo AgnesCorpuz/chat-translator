@@ -92,8 +92,8 @@ export default {
     displaySearchResults(results){
         // Collapsible response name
         var responseButton = document.createElement('button');
-        responseButton.textContent = results.entities[0].name;
-        responseButton.id = 'response-' + results.entities[0].id;
+        responseButton.textContent = results.name;
+        responseButton.id = 'response-' + results.id;
         responseButton.className = 'collapsible';
         responseButton.addEventListener('click', function() {
             this.classList.toggle('active');
@@ -108,10 +108,10 @@ export default {
 
         // Response text content
         var responseText = document.createElement('p');
-        responseText.innerHTML = results.entities[0].texts[0].content;
-        responseText.id = 'response-content-' + results.entities[0].id;
+        responseText.innerHTML = results.texts[0].content;
+        responseText.id = 'response-content-' + results.id;
         responseText.className = 'content';
-        responseText.addEventListener('click', () => addResponseText(results.entities[0].texts[0].content));
+        responseText.addEventListener('click', () => addResponseText(results.texts[0].content));
         document.getElementById('search-result-container').appendChild(responseText);
     },
 
