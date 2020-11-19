@@ -56,8 +56,12 @@ function sendChat(){
     let agent = currentConversation.participants.find(p => p.purpose == 'agent');
     let communicationId = agent.chats[0].id;
 
+    // Default language to english if no source_language available
+    let sourceLang = translationData.source_language;
+    if(sourceLang === '') sourceLang = 'en';
+
     // Translate text to customer's local language
-    translate.translateText(message, translationData.source_language, function(translatedData) {
+    translate.translateText(message, sourceLang, function(translatedData) {
         // Wait for translate to finish before calling sendMessage
         sendMessage(translatedData.translated_text, currentConversationId, communicationId);
     });

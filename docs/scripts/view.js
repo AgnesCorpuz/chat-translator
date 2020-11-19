@@ -27,6 +27,7 @@ function clearSearchResults(){
     let label = document.createElement('label');
     label.id = 'toggle-search';
     label.textContent = '<< Back to Canned Responses';
+    document.getElementById('search-result-container').appendChild(label);
 }
 
 export default {
@@ -100,7 +101,9 @@ export default {
         responseText.innerHTML = response.texts[0].content;
         responseText.id = 'response-content-' + response.id;
         responseText.className = 'content';
-        responseText.addEventListener('click', () => addResponseText(response.texts[0].content));
+        responseText.addEventListener('click', function() {
+            document.getElementById('message-textarea').value = response.texts[0].content;
+        });
         document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseText);
     },
 
