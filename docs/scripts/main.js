@@ -142,14 +142,16 @@ function toggleIframe(){
     let label = document.getElementById('toggle-iframe').textContent;	
 
     if(label === 'Open Chat Translator'){	
-        document.getElementById('toggle-iframe').value = 'Back to Chat Translator';
+        document.getElementById('toggle-iframe').textContent = 'Back to Chat Translator';
         document.getElementById('agent-assist').style.display = 'block';
         document.getElementById('libraries-container').style.display = 'none';
     } else {	
-        document.getElementById('toggle-iframe').value = 'Open Chat Translator';
+        document.getElementById('toggle-iframe').textContent = 'Open Chat Translator';
         document.getElementById('agent-assist').style.display = 'none';
         document.getElementById('libraries-container').style.display = 'block';
-        cannedResponse.getLibraries();
+        
+        // Only call getLibraries function if element does not have a child
+        if(document.getElementById('libraries-container').childNodes.length = 0) cannedResponse.getLibraries();
     }	
 }
 
