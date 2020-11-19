@@ -148,9 +148,6 @@ a:hover{
 
 #libraries-container {
     margin: 10px;
-    /* height: 350px;
-    display: none;
-    overflow: auto; */
 }
 
 #canned-response-container {
@@ -183,12 +180,7 @@ a:hover{
     padding: 0 18px;
     display: none;
     overflow: hidden;
-    /* background-color: #f1f1f1; */
 }
-
-/* .collapsible {
-    width: -webkit-fill-available;
-} */
 
 #search-container {
     margin: 10px 10px 0px;

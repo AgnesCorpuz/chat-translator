@@ -181,7 +181,7 @@ function getResponses(libraryId, libraryName){
 function searchResponse(query){
     return responseManagementApi.postResponsemanagementResponsesQuery({'queryPhrase': query})
     .then((responses) => {
-        responses.entities.forEach((response) => {
+        responses.results.entities.forEach((response) => {
             view.displayResponses(response);
         });
     });
