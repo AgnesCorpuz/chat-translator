@@ -1,12 +1,7 @@
 import view from './view.js';
 
-// // Obtain a reference to the platformClient object
-// const platformClient = require('platformClient');
-// const client = platformClient.ApiClient.instance;
-
-// API instances
+const platformClient = require('platformClient');
 const responseManagementApi = new platformClient.ResponseManagementApi();
-
 
 export default {
     getLibraries(){    
