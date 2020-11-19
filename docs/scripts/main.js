@@ -1,7 +1,6 @@
 import view from './view.js';
 import controller from './notifications-controller.js';
 import translate from './translate-service.js';
-// import cannedResponse from './canned-response.js';
 
 // Obtain a reference to the platformClient object
 const platformClient = require('platformClient');
@@ -211,23 +210,17 @@ document.getElementById('message-textarea')
 
 document.getElementById('find-response-btn')
     .addEventListener('click', function(){
-        let query = document.getElementById('find-response').text;
+        let query = document.getElementById('find-response').value;
         searchResponse(query);
     });
 
 document.getElementById('find-response')
     .addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
-            let query = document.getElementById('find-response').text;
+            let query = document.getElementById('find-response').value;
             searchResponse(query);
         }
     });
-
-// document.getElementById('find-response')
-//     .addEventListener('change', function(){
-//         let query = document.getElementById('find-response').textContent;
-//         searchResponse(query);
-//     });
 
 /** --------------------------------------------------------------
  *                       INITIAL SETUP
