@@ -17,6 +17,22 @@ function clearSearchResults(){
     }
 }
 
+/**
+ * Convert the html content of the canned response to plain text
+ */
+function htmlToPlain(rawHtml){
+    let finalText = rawHtml;
+    finalText = finalText.replace(/<\/div>/ig, '\n');
+    finalText = finalText.replace(/<\/li>/ig, '\n');
+    finalText = finalText.replace(/<li>/ig, '  *  ');
+    finalText = finalText.replace(/<\/ul>/ig, '\n');
+    finalText = finalText.replace(/<\/p>/ig, '\n');
+    finalText = finalText.replace(/<br\s*[\/]?>/gi, "\n");
+    finalText = finalText.replace(/<[^>]+>/ig, '');
+
+    return finalText;
+}
+
 export default {
     /**
      * Add a new chat message to the page.
@@ -89,7 +105,8 @@ export default {
         responseText.id = 'response-content-' + response.id;
         responseText.className = 'content';
         responseText.addEventListener('click', function() {
-            document.getElementById('message-textarea').innerText = response.texts[0].content;
+            document.getElementById('message-textarea').value =
+                htmlToPlain(response.texts[0].content);
         });
         document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseText);
     },
@@ -121,7 +138,8 @@ export default {
         responseText.id = 'response-content-' + results.id;
         responseText.className = 'content';
         responseText.addEventListener('click', function() {
-            document.getElementById('message-textarea').innerText = results.texts[0].content;
+            document.getElementById('message-textarea').value =
+                htmlToPlain(response.texts[0].content);
         });
         document.getElementById('search-result-container').appendChild(responseText);
     },

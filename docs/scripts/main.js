@@ -23,7 +23,6 @@ let genesysCloudLanguage = 'en-us';
 
 /**
  * Callback function for 'message' and 'typing-indicator' events.
- * For this sample, it will merely display the chat message into the page.
  * 
  * @param {Object} data the event data  
  */
