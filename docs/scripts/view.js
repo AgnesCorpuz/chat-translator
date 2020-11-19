@@ -7,27 +7,14 @@ function updateScroll(){
 }
 
 /**
- * Add response in textarea
- * @param {String} text 
- */
-function addResponseText(text){
-    document.getElementById('message-textarea').innerHTML = text;
-}
-
-/**
  * Clear DIV of previous search results
  */
 function clearSearchResults(){
     let searchContainer = document.getElementById("search-result-container");
 
-    while (searchContainer.hasChildNodes()) {  
-        searchContainer.removeChild(searchContainer.firstChild);
+    while (searchContainer.childNodes.length > 1) {  
+        searchContainer.removeChild(searchContainer.lastChild);
     }
-
-    let label = document.createElement('label');
-    label.id = 'toggle-search';
-    label.textContent = '<< Back to Canned Responses';
-    document.getElementById('search-result-container').appendChild(label);
 }
 
 export default {
@@ -133,7 +120,9 @@ export default {
         responseText.innerHTML = results.texts[0].content;
         responseText.id = 'response-content-' + results.id;
         responseText.className = 'content';
-        responseText.addEventListener('click', () => addResponseText(results.texts[0].content));
+        responseText.addEventListener('click', function() {
+            document.getElementById('message-textarea').value = response.texts[0].content;
+        });
         document.getElementById('search-result-container').appendChild(responseText);
     },
 
