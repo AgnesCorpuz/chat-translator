@@ -151,7 +151,7 @@ function toggleIframe(){
         document.getElementById('libraries-container').style.display = 'block';
         
         // Only call getLibraries function if element does not have a child
-        if(document.getElementById('libraries-container').childNodes.length = 0) cannedResponse.getLibraries();
+        if(document.getElementById('libraries-container').childNodes.length == 0) cannedResponse.getLibraries();
     }	
 }
 
