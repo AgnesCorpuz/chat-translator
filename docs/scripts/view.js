@@ -89,7 +89,7 @@ export default {
         responseText.id = 'response-content-' + response.id;
         responseText.className = 'content';
         responseText.addEventListener('click', function() {
-            document.getElementById('message-textarea').value = response.texts[0].content;
+            document.getElementById('message-textarea').innerText = response.texts[0].content;
         });
         document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseText);
     },
@@ -121,7 +121,7 @@ export default {
         responseText.id = 'response-content-' + results.id;
         responseText.className = 'content';
         responseText.addEventListener('click', function() {
-            document.getElementById('message-textarea').value = results.texts[0].content;
+            document.getElementById('message-textarea').innerText = results.texts[0].content;
         });
         document.getElementById('search-result-container').appendChild(responseText);
     },
