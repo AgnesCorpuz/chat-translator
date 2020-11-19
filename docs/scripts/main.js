@@ -158,7 +158,10 @@ function toggleIframe(){
 /** --------------------------
  *  CANNED RESPONSE FUNCTIONS
  * ------------------------ */
-function getLibraries(){    
+/**
+ * Get all libraries in the org
+ */
+ function getLibraries(){    
     return responseManagementApi.getResponsemanagementLibraries()
     .then((libraries) => {
         libraries.entities.forEach((library) => {
@@ -167,6 +170,11 @@ function getLibraries(){
     });
 }
 
+/**
+ * Get all responses of each library
+ * @param {String} libraryId 
+ * @param {String} libraryName 
+ */
 function getResponses(libraryId, libraryName){
     return responseManagementApi.getResponsemanagementResponses(libraryId)
     .then((responses) => {
@@ -178,6 +186,10 @@ function getResponses(libraryId, libraryName){
     });
 }
 
+/**
+ * Search all responses in the org
+ * @param {String} query 
+ */
 function searchResponse(query){
     return responseManagementApi.postResponsemanagementResponsesQuery({'queryPhrase': query})
     .then((responses) => {

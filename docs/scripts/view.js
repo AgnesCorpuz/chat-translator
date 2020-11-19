@@ -2,7 +2,7 @@
  * This script is focused on the HTML / displaying of data to the page
  */
 function updateScroll(){
-    var div = document.getElementById('agent-assist');
+    let div = document.getElementById('agent-assist');
     div.scrollTop = div.scrollHeight;
 }
 
@@ -14,6 +14,21 @@ function addResponseText(text){
     document.getElementById('message-textarea').innerHTML = text;
 }
 
+/**
+ * Clear DIV of previous search results
+ */
+function clearSearchResults(){
+    let searchContainer = document.getElementById("search-result-container");
+
+    while (searchContainer.hasChildNodes()) {  
+        searchContainer.removeChild(searchContainer.firstChild);
+    }
+
+    let label = document.createElement('label');
+    label.id = 'toggle-search';
+    label.textContent = '<< Back to Canned Responses';
+}
+
 export default {
     /**
      * Add a new chat message to the page.
@@ -21,10 +36,10 @@ export default {
      * @param {String} message chat message to be displayed
      */
     addChatMessage(sender, message, purpose){        
-        var chatMsg = document.createElement('p');
+        let chatMsg = document.createElement('p');
         chatMsg.textContent = sender + ': ' + message;
 
-        var container = document.createElement('div');
+        let container = document.createElement('div');
         container.appendChild(chatMsg);
         container.className = 'chat-message ' + purpose;
         document.getElementById('agent-assist').appendChild(container);
@@ -38,13 +53,13 @@ export default {
      * @param {String} libraryName 
      */
     displayLibraries(libraryId, libraryName){
-        var libContainer = document.createElement('button');
+        let libContainer = document.createElement('button');
         libContainer.textContent = libraryName;
         libContainer.id = 'library-' + libraryId;
         libContainer.className = 'collapsible';
         libContainer.addEventListener('click', function() {
             this.classList.toggle('active');
-            var content = this.nextElementSibling;	
+            let content = this.nextElementSibling;	
             if (content.style.display === 'block') {	
                 content.style.display = 'none';	
             } else {	
@@ -53,7 +68,7 @@ export default {
         });
         document.getElementById('libraries-container').appendChild(libContainer);
 
-        var responsesContainer = document.createElement('div');
+        let responsesContainer = document.createElement('div');
         responsesContainer.id = 'responses-container-' + libraryId;
         responsesContainer.className = 'content';
         document.getElementById('libraries-container').appendChild(responsesContainer);
@@ -65,13 +80,13 @@ export default {
      */
     displayResponses(response){
         // Collapsible response name
-        var responseButton = document.createElement('button');
+        let responseButton = document.createElement('button');
         responseButton.textContent = response.name;
         responseButton.id = 'response-' + response.id;
         responseButton.className = 'collapsible';
         responseButton.addEventListener('click', function() {
             this.classList.toggle('active');
-            var content = this.nextElementSibling;	
+            let content = this.nextElementSibling;	
             if (content.style.display === 'block') {	
                 content.style.display = 'none';	
             } else {	
@@ -81,7 +96,7 @@ export default {
         document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseButton);
 
         // Response text content
-        var responseText = document.createElement('p');
+        let responseText = document.createElement('p');
         responseText.innerHTML = response.texts[0].content;
         responseText.id = 'response-content-' + response.id;
         responseText.className = 'content';
@@ -89,15 +104,19 @@ export default {
         document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseText);
     },
 
+    /**
+     * Displays all search results in a DIV
+     * @param {object} results 
+     */
     displaySearchResults(results){
         // Collapsible response name
-        var responseButton = document.createElement('button');
+        let responseButton = document.createElement('button');
         responseButton.textContent = results.name;
         responseButton.id = 'response-' + results.id;
         responseButton.className = 'collapsible';
         responseButton.addEventListener('click', function() {
             this.classList.toggle('active');
-            var content = this.nextElementSibling;	
+            let content = this.nextElementSibling;	
             if (content.style.display === 'block') {	
                 content.style.display = 'none';	
             } else {	
@@ -107,7 +126,7 @@ export default {
         document.getElementById('search-result-container').appendChild(responseButton);
 
         // Response text content
-        var responseText = document.createElement('p');
+        let responseText = document.createElement('p');
         responseText.innerHTML = results.texts[0].content;
         responseText.id = 'response-content-' + results.id;
         responseText.className = 'content';
@@ -115,6 +134,9 @@ export default {
         document.getElementById('search-result-container').appendChild(responseText);
     },
 
+    /**
+     * This toggles between showing Canned Responses or Search Results
+     */
     toggleDIVs(){
         let cannedDIV = document.getElementById('libraries-container');
         let searchDIV = document.getElementById('search-result-container');
@@ -126,5 +148,8 @@ export default {
             cannedDIV.style.display = 'block';
             searchDIV.style.display = 'none';
         }
+
+        // Clear DIV of previous search results
+        clearSearchResults();
     }
 }
