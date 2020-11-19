@@ -142,6 +142,7 @@ export default {
         }
 
         // Clear DIV of previous search results
-        clearSearchResults();
+        let searchContainer = document.getElementById("search-result-container");
+        if(searchContainer.childNodes.length > 1) clearSearchResults();
     }
 }
