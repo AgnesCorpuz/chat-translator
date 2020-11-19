@@ -87,5 +87,44 @@ export default {
         responseText.className = 'content';
         responseText.addEventListener('click', () => addResponseText(response.texts[0].content));
         document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseText);
+    },
+
+    displaySearchResults(results){
+        // Collapsible response name
+        var responseButton = document.createElement('button');
+        responseButton.textContent = results.entities[0].name;
+        responseButton.id = 'response-' + results.entities[0].id;
+        responseButton.className = 'collapsible';
+        responseButton.addEventListener('click', function() {
+            this.classList.toggle('active');
+            var content = this.nextElementSibling;	
+            if (content.style.display === 'block') {	
+                content.style.display = 'none';	
+            } else {	
+                content.style.display = 'block';	
+            }	
+        });
+        document.getElementById('search-result-container').appendChild(responseButton);
+
+        // Response text content
+        var responseText = document.createElement('p');
+        responseText.innerHTML = results.entities[0].texts[0].content;
+        responseText.id = 'response-content-' + results.entities[0].id;
+        responseText.className = 'content';
+        responseText.addEventListener('click', () => addResponseText(results.entities[0].texts[0].content));
+        document.getElementById('search-result-container').appendChild(responseText);
+    },
+
+    toggleDIVs(){
+        let cannedDIV = document.getElementById('libraries-container');
+        let searchDIV = document.getElementById('search-result-container');
+
+        if(cannedDIV.style.display === 'block'){
+            cannedDIV.style.display = 'none';
+            searchDIV.style.display = 'block';
+        } else {
+            cannedDIV.style.display = 'block';
+            searchDIV.style.display = 'none';
+        }
     }
 }

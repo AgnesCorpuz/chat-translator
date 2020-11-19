@@ -177,14 +177,20 @@ a:hover{
 }
 
 .content {
-    padding: 0 18px;
+    /* padding: 0 18px; */
     display: none;
     overflow: hidden;
+    padding-left: 15px;
+    padding-right: 5px;
 }
 
 #search-container {
     margin: 10px 10px 0px;
     position: relative;
+}
+
+#search-result-container {
+    display: none;
 }
 
 .search-label {

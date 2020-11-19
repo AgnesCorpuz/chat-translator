@@ -182,7 +182,8 @@ function searchResponse(query){
     return responseManagementApi.postResponsemanagementResponsesQuery({'queryPhrase': query})
     .then((responses) => {
         responses.results.entities.forEach((response) => {
-            view.displayResponses(response);
+            view.toggleDIVs();
+            view.displaySearchResults(response);
         });
     });
 }
@@ -221,6 +222,9 @@ document.getElementById('find-response')
             searchResponse(query);
         }
     });
+
+document.getElementById('toggle-search')
+    .addEventListener('click', () => view.toggleDIVs());
 
 /** --------------------------------------------------------------
  *                       INITIAL SETUP
