@@ -148,6 +148,12 @@ a:hover{
 
 #libraries-container {
     margin: 10px;
+    /* height: 350px;
+    display: none;
+    overflow: auto; */
+}
+
+#canned-response-container {
     height: 350px;
     display: none;
     overflow: auto;
@@ -182,4 +188,35 @@ a:hover{
 
 button {
     width: -webkit-fill-available;
+}
+
+.search-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+#find-response {
+    border: 1px solid #e1e1e1;
+    background-color: #f6f6f6;
+    box-shadow: none;
+    padding-right: 30px;
+    height: 30px;
+    border-radius: 4px;
+    text-overflow: ellipsis;
+}
+
+#find-response-btn {
+    position: absolute;
+    top: -2px;
+    right: 0;
+}
+
+i {
+    color: #b8b8b8;
 }

@@ -1,7 +1,7 @@
 import view from './view.js';
 import controller from './notifications-controller.js';
 import translate from './translate-service.js';
-import cannedResponse from './canned-response.js';
+// import cannedResponse from './canned-response.js';
 
 // Obtain a reference to the platformClient object
 const platformClient = require('platformClient');
@@ -10,6 +10,7 @@ const client = platformClient.ApiClient.instance;
 // API instances
 const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
+const responseManagementApi = new platformClient.ResponseManagementApi();
 
 let userId = '';
 let currentConversation = null;
@@ -144,15 +145,48 @@ function toggleIframe(){
     if(label === 'Open Chat Translator'){	
         document.getElementById('toggle-iframe').textContent = 'Back to Chat Translator';
         document.getElementById('agent-assist').style.display = 'block';
-        document.getElementById('libraries-container').style.display = 'none';
+        document.getElementById('canned-response-container').style.display = 'none';
     } else {	
         document.getElementById('toggle-iframe').textContent = 'Open Chat Translator';
         document.getElementById('agent-assist').style.display = 'none';
-        document.getElementById('libraries-container').style.display = 'block';
+        document.getElementById('canned-response-container').style.display = 'block';
         
         // Only call getLibraries function if element does not have a child
-        if(document.getElementById('libraries-container').childNodes.length == 0) cannedResponse.getLibraries();
+        if(document.getElementById('libraries-container').childNodes.length == 0) getLibraries();
     }	
+}
+
+/** --------------------------
+ *  CANNED RESPONSE FUNCTIONS
+ * ------------------------ */
+function getLibraries(){    
+    return responseManagementApi.getResponsemanagementLibraries()
+    .then((libraries) => {
+        libraries.entities.forEach((library) => {
+            getResponses(library.id, library.name);
+        });
+    });
+}
+
+function getResponses(libraryId, libraryName){
+    return responseManagementApi.getResponsemanagementResponses(libraryId)
+    .then((responses) => {
+        view.displayLibraries(libraryId, libraryName);
+
+        responses.entities.forEach((response) => {
+            view.displayResponses(response);
+        });
+    });
+}
+
+
+function searchResponse(query){
+    return responseManagementApi.postResponsemanagementResponsesQuery({'queryPhrase': query})
+    .then((responses) => {
+        responses.entities.forEach((response) => {
+            view.displayResponses(response);
+        });
+    });
 }
 
 /** --------------------------------------------------------------
@@ -175,6 +209,24 @@ document.getElementById('message-textarea')
             return false; // Just a workaround for old browsers
         }
     });
+
+document.getElementById('find-response-btn')
+    .addEventListener('click', function(){
+        let query = document.getElementById('find-response').textContent;
+        searchResponse(query);
+    })
+    .addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            let query = document.getElementById('find-response').textContent;
+            searchResponse(query);
+        }
+    });
+
+// document.getElementById('find-response')
+//     .addEventListener('change', function(){
+//         let query = document.getElementById('find-response').textContent;
+//         searchResponse(query);
+//     });
 
 /** --------------------------------------------------------------
  *                       INITIAL SETUP

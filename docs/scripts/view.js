@@ -11,7 +11,7 @@ function updateScroll(){
  * @param {String} text 
  */
 function addResponseText(text){
-    document.getElementById('message-textarea').outerHTML = text;
+    document.getElementById('message-textarea').innerHTML = text;
 }
 
 export default {
