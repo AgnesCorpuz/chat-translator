@@ -150,6 +150,7 @@ a:hover{
     margin: 10px;
     height: 350px;
     display: none;
+    overflow: auto;
 }
 
 .collapsible {

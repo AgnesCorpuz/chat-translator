@@ -12,7 +12,6 @@ function updateScroll(){
  */
 function addResponseText(text){
     document.getElementById('message-textarea').innerHTML = text;
-    window.location = 'index.html';
 }
 
 export default {

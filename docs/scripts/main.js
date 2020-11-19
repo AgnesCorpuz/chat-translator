@@ -139,7 +139,7 @@ function subscribeChatConversation(conversationId){
  * This toggles between translator and canned response iframe	
  */	
 function toggleIframe(){	
-    let label = document.getElementById('toggle-iframe').value;	
+    let label = document.getElementById('toggle-iframe').textContent;	
 
     if(label === 'Open Chat Translator'){	
         document.getElementById('toggle-iframe').value = 'Back to Chat Translator';
