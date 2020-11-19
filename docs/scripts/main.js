@@ -1,7 +1,7 @@
 import view from './view.js';
 import controller from './notifications-controller.js';
 import translate from './translate-service.js';
-import cannedResponse from './canned-response';
+import cannedResponse from './canned-response.js';
 
 // Obtain a reference to the platformClient object
 const platformClient = require('platformClient');
