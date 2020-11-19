@@ -57,8 +57,13 @@ let onMessage = (data) => {
  */
 function sendChat(){
     let message = document.getElementById('message-textarea').value;
-    let agent = currentConversation.participants.find(p => p.purpose == 'agent');
+
+    // Get the last agent participant, this also fixes an issue when an agent
+    // gets reconnected and reassigned a new participant id.
+    let agentsArr = currentConversation.participants.filter(p => p.purpose == 'agent');
+    let agent = agentsArr[agentsArr.length - 1];
     let communicationId = agent.chats[0].id;
+
     let sourceLang;
 
     // Default language to english if no source_language available    
@@ -81,6 +86,7 @@ function sendChat(){
  *  Send message to the customer
  */
 function sendMessage(message, conversationId, communicationId){
+    console.log(message);
     conversationsApi.postConversationsChatCommunicationMessages(
         conversationId, communicationId,
         {
