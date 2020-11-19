@@ -121,7 +121,7 @@ export default {
         responseText.id = 'response-content-' + results.id;
         responseText.className = 'content';
         responseText.addEventListener('click', function() {
-            document.getElementById('message-textarea').value = response.texts[0].content;
+            document.getElementById('message-textarea').value = results.texts[0].content;
         });
         document.getElementById('search-result-container').appendChild(responseText);
     },
@@ -143,6 +143,6 @@ export default {
 
         // Clear DIV of previous search results
         let searchContainer = document.getElementById("search-result-container");
-        if(searchContainer.childNodes.length > 1) clearSearchResults();
+        if(searchContainer.children.length > 1) clearSearchResults();
     }
 }
