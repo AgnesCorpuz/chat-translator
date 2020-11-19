@@ -1,6 +1,7 @@
 import view from './view.js';
 import controller from './notifications-controller.js';
-import translate from './translate-service.js'
+import translate from './translate-service.js';
+import cannedResponse from './canned-response';
 
 // Obtain a reference to the platformClient object
 const platformClient = require('platformClient');
@@ -134,9 +135,30 @@ function subscribeChatConversation(conversationId){
             onMessage);
 }
 
+/**	
+ * This toggles between translator and canned response iframe	
+ */	
+function toggleIframe(){	
+    let label = document.getElementById('toggle-iframe').value;	
+
+    if(label === 'Open Chat Translator'){	
+        document.getElementById('toggle-iframe').value = 'Back to Chat Translator';
+        document.getElementById('agent-assist').style.display = 'block';
+        document.getElementById('libraries-container').style.display = 'none';
+    } else {	
+        document.getElementById('toggle-iframe').value = 'Open Chat Translator';
+        document.getElementById('agent-assist').style.display = 'none';
+        document.getElementById('libraries-container').style.display = 'block';
+        cannedResponse.getLibraries();
+    }	
+}
+
 /** --------------------------------------------------------------
  *                       EVENT HANDLERS
  * -------------------------------------------------------------- */
+document.getElementById('toggle-iframe')	
+    .addEventListener('click', () => toggleIframe());
+
 document.getElementById('chat-form')
     .addEventListener('submit', () => sendChat());
 
