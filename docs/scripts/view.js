@@ -139,7 +139,7 @@ export default {
         responseText.className = 'content';
         responseText.addEventListener('click', function() {
             document.getElementById('message-textarea').value =
-                htmlToPlain(response.texts[0].content);
+                htmlToPlain(results.texts[0].content);
         });
         document.getElementById('search-result-container').appendChild(responseText);
     },
