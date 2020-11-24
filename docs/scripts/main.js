@@ -16,6 +16,9 @@ const conversationsApi = new platformClient.ConversationsApi();
 const responseManagementApi = new platformClient.ResponseManagementApi();
 
 let userId = '';
+let agentName = 'AGENT_NAME';
+let agentAlias = 'AGENT_ALIAS'; // TODO: 
+let customerName = 'CUSTOMER_NAME';
 let currentConversation = null;
 let currentConversationId = '';
 let translationData = null;
@@ -199,7 +202,7 @@ function getResponses(libraryId, libraryName){
         view.displayLibraries(libraryId, libraryName);
 
         responses.entities.forEach((response) => {
-            view.displayResponses(response);
+            view.displayResponses(response, doResponseSubstitution);
         });
     });
 }
@@ -213,9 +216,49 @@ function searchResponse(query){
     .then((responses) => {
         responses.results.entities.forEach((response) => {
             view.toggleDIVs();
-            view.displaySearchResults(response);
+            view.displaySearchResults(response, doResponseSubstitution);
         });
     });
+}
+
+/**
+ * Replaces the dynamic variables in canned responses with appropriate
+ * values. This function is used in the view when an agent clicks a response.
+ * @param {String} text 
+ * @param {String} responseId 
+ */
+function doResponseSubstitution(text, responseId){
+    let finalText = text;
+
+    // Do the default substitutions first
+    finalText = finalText.replace(/{{AGENT_NAME}}/g, agentName);
+    finalText = finalText.replace(/{{CUSTOMER_NAME}}/g, customerName);
+
+    let participantData = currentConversation.participants
+                            .find(p => p.purpose == 'customer').attributes;
+
+    // Do the custom substitutions
+    return responseManagementApi.getResponsemanagementResponse(responseId)
+    .then((responseData) => {
+        let subs = responseData.substitutions;
+        subs.forEach(sub => {
+            let subRegex = new RegExp(`{{${sub.id}}}`, 'g');
+            let val = `{{${sub.id}}}`;
+
+            // Check if substitution exists on the participant data, if not
+            // use default value
+            if(participantData[sub.id]){
+                val = participantData[sub.id];
+            } else {
+                val = sub.defaultValue ? sub.defaultValue : val;
+            }
+
+            finalText = finalText.replace(subRegex, val);
+        });
+
+        return finalText;
+    })
+    .catch(e => console.error(e));
 }
 
 /** --------------------------------------------------------------
@@ -290,11 +333,13 @@ client.loginImplicitGrant(
     return usersApi.getUsersMe();
 }).then(userMe => {
     userId = userMe.id;
+    agentName = userMe.name;
 
     // Get current conversation
     return conversationsApi.getConversation(currentConversationId);
 }).then((conv) => { 
     currentConversation = conv;
+    customerName = conv.participants.find(p => p.purpose == 'customer').name;
 
     return setupChatChannel();
 }).then(data => { 

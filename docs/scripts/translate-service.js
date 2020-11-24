@@ -20,9 +20,6 @@ const languageCodeMapping = {
     'zh-tw': 'zh-TW'
 }
 
-// Translate Key
-const key = '73fg93hf9yf973qmf983qmut98y9209gp';
-
 export default {
     translateText(key, text, language, callback){
         let language_code = languageCodeMapping[language] ? 
