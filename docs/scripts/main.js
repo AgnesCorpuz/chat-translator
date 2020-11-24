@@ -160,7 +160,7 @@ function toggleIframe(){
     let label = document.getElementById('toggle-iframe').textContent;	
 
     if(label === 'Open Chat Translator'){	
-        document.getElementById('toggle-iframe').textContent = 'Back to Chat Translator';
+        document.getElementById('toggle-iframe').textContent = 'Open Canned Responses';
         document.getElementById('agent-assist').style.display = 'block';
         document.getElementById('canned-response-container').style.display = 'none';
     } else {	
