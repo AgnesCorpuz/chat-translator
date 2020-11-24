@@ -20,9 +20,11 @@ const languageCodeMapping = {
     'zh-tw': 'zh-TW'
 }
 
+// Translate Key
+const key = '73fg93hf9yf973qmf983qmut98y9209gp';
 
 export default {
-    translateText(text, language, callback){
+    translateText(key, text, language, callback){
         let language_code = languageCodeMapping[language] ? 
                     languageCodeMapping[language] : language;
 
@@ -32,7 +34,7 @@ export default {
             target_language: language_code
         }
 
-        fetch('https://i0k1088d5m.execute-api.us-east-1.amazonaws.com/chat-assistant-translate',
+        fetch(`https://i0k1088d5m.execute-api.us-east-1.amazonaws.com/chat-assistant-translate?key=${key}`,
             {
                 method: 'POST',
                 headers: {
@@ -46,6 +48,25 @@ export default {
             console.log(JSON.stringify(translationData));
 
             callback(translationData);
+        })
+        .catch(e => console.error(e));
+    },
+
+    getKey(token){
+        return fetch('https://i0k1088d5m.execute-api.us-east-1.amazonaws.com/chat-assistant-getkey',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    gcloud_token: token
+                })
+            }
+        )
+        .then(response => response.json())
+        .then(data => {
+            return data.translate_key;
         })
         .catch(e => console.error(e));
     }
