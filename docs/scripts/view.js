@@ -82,7 +82,9 @@ export default {
      * Display responses and group by libraries
      * @param {Object} response 
      */
-    displayResponses(response){
+    displayResponses(response, doResponseSubstitution){
+        let responseId = response.id;
+
         // Collapsible response name
         let responseButton = document.createElement('button');
         responseButton.textContent = response.name;
@@ -105,8 +107,12 @@ export default {
         responseText.id = 'response-content-' + response.id;
         responseText.className = 'content';
         responseText.addEventListener('click', function() {
-            document.getElementById('message-textarea').value =
-                htmlToPlain(response.texts[0].content);
+            let text = htmlToPlain(response.texts[0].content);
+            doResponseSubstitution(text, responseId)
+            .then((finalText) => {
+                document.getElementById('message-textarea').value = finalText;
+            })
+            .catch(e => console.error(e));
         });
         document.getElementById('responses-container-' + response.libraries[0].id).appendChild(responseText);
     },
@@ -115,7 +121,9 @@ export default {
      * Displays all search results in a DIV
      * @param {object} results 
      */
-    displaySearchResults(results){
+    displaySearchResults(results, doResponseSubstitution){
+        let responseId = results.id;
+
         // Collapsible response name
         let responseButton = document.createElement('button');
         responseButton.textContent = results.name;
@@ -138,8 +146,12 @@ export default {
         responseText.id = 'response-content-' + results.id;
         responseText.className = 'content';
         responseText.addEventListener('click', function() {
-            document.getElementById('message-textarea').value =
-                htmlToPlain(results.texts[0].content);
+            let text = htmlToPlain(results.texts[0].content);
+            doResponseSubstitution(text, responseId)
+            .then((finalText) => {
+                document.getElementById('message-textarea').value = finalText;
+            })
+            .catch(e => console.error(e));
         });
         document.getElementById('search-result-container').appendChild(responseText);
     },
