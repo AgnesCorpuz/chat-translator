@@ -17,7 +17,7 @@ const responseManagementApi = new platformClient.ResponseManagementApi();
 
 let userId = '';
 let agentName = 'AGENT_NAME';
-let agentAlias = 'AGENT_ALIAS'; // TODO: 
+let agentAlias = 'AGENT_ALIAS';
 let customerName = 'CUSTOMER_NAME';
 let currentConversation = null;
 let currentConversationId = '';
@@ -233,6 +233,8 @@ function doResponseSubstitution(text, responseId){
     // Do the default substitutions first
     finalText = finalText.replace(/{{AGENT_NAME}}/g, agentName);
     finalText = finalText.replace(/{{CUSTOMER_NAME}}/g, customerName);
+    finalText = finalText.replace(/{{AGENT_ALIAS}}/g, agentAlias);
+    
 
     let participantData = currentConversation.participants
                             .find(p => p.purpose == 'customer').attributes;
@@ -260,6 +262,26 @@ function doResponseSubstitution(text, responseId){
     })
     .catch(e => console.error(e));
 }
+
+/**
+* TODO: Delete this with User API once feature has been added.
+* This function gets the Agent Chat name of the user to replace with
+* the AGENT_ALIAS variable in the canned response.
+*/
+function getAgentAlias(){
+    return fetch(`https://api.mypurecloud.com/api/v2/users/${userId}/profile?fl=*`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `bearer ${client.authData.accessToken}`
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        return data.agent ? data.agent.name[0].value : null;
+    })
+    .catch(e => console.error(e));
+}
+    
 
 /** --------------------------------------------------------------
  *                       EVENT HANDLERS
@@ -334,6 +356,10 @@ client.loginImplicitGrant(
 }).then(userMe => {
     userId = userMe.id;
     agentName = userMe.name;
+
+    return getAgentAlias();
+}).then(agentName => {
+    agentAlias = agentName ? agentName : agentAlias;
 
     // Get current conversation
     return conversationsApi.getConversation(currentConversationId);
