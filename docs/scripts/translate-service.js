@@ -1,3 +1,5 @@
+import config from './config.js';
+
 // Genesys Cloud Language Code to AWS Translate Language Code
 const languageCodeMapping = {
     'cs': 'cs',
@@ -31,7 +33,7 @@ export default {
             target_language: language_code
         }
 
-        fetch(`https://i0k1088d5m.execute-api.us-east-1.amazonaws.com/chat-assistant-translate?key=${key}`,
+        fetch(config.awsEndpoints.translateText + `${key}`,
             {
                 method: 'POST',
                 headers: {
@@ -50,7 +52,7 @@ export default {
     },
 
     getKey(token){
-        return fetch('https://i0k1088d5m.execute-api.us-east-1.amazonaws.com/chat-assistant-getkey',
+        return fetch(config.awsEndpoints.getKey,
             {
                 method: 'POST',
                 headers: {

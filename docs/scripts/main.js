@@ -1,10 +1,7 @@
 import view from './view.js';
 import controller from './notifications-controller.js';
 import translate from './translate-service.js';
-
-// Redirect URI
-const testUri = 'https://localhost/';
-const prodUri =  'https://genesysappfoundry.github.io/chat-translator/';
+import config from './config.js';
 
 // Obtain a reference to the platformClient object
 const platformClient = require('platformClient');
@@ -329,11 +326,12 @@ currentConversationId = urlParams.get('conversationid');
 genesysCloudLanguage = urlParams.get('language');
 
 const redirectUri = (new URL (window.location.href)).hostname == 'localhost' ?
-                testUri : prodUri;
+                config.testUri : config.prodUri;
 
 client.setPersistSettings(true, 'chat-translator');
+client.setEnvironment(config.genesysCloud.region);
 client.loginImplicitGrant(
-    '5f3e661d-61be-4a13-b536-3f54f24e26c9',
+    config.clientID,
     redirectUri,
     { state: JSON.stringify({
         conversationId: currentConversationId,
